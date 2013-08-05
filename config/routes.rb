@@ -1,4 +1,4 @@
-PadmaRootApp::Application.routes.draw do
+Importer::Application.routes.draw do
   devise_for :users
 
   root to: 'application#home'
