@@ -6,3 +6,4 @@
 /.env
 .idea
 /.ruby-gemset
+/config/environment_variables.yml
