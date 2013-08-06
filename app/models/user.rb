@@ -23,4 +23,8 @@ class User < ActiveRecord::Base
   def account_name_changed?
     self.current_account_id_changed?
   end
+
+  def admin?
+    "admin".in? self.padma.roles.map{|ea|ea["name"] if ea["account_name"] == self.current_account.name}
+  end
 end

@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :mock_login
   before_filter :authenticate_user!
+  before_filter :authorize_user!
   before_filter :require_padma_account
   before_filter :set_current_account
   before_filter :set_timezone
@@ -15,6 +16,14 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def authorize_user!
+    unless current_user.admin?
+      flash[:error] = "unauthorized access"
+      redirect_to home_path
+      false
+    end
+  end
 
   def set_locale
     if signed_in?
@@ -28,7 +37,7 @@ class ApplicationController < ActionController::Base
   # Mocks CAS login in development
   def mock_login
     if Rails.env.development?
-      a = Account.find_or_create_by(name: "development")
+      a = Account.find_or_create_by(name: "martinez")
       user = User.find_or_create_by(username: "luis.perichon", current_account_id: a.id)
 
       sign_in(user)
