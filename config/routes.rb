@@ -1,6 +1,7 @@
 Importer::Application.routes.draw do
   devise_for :users
 
-  root to: 'application#home'
+  resources :imports
+  root to: 'imports#index'
   get 'home' => 'home#show'
 end
