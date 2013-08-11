@@ -6,6 +6,7 @@ class Account < ActiveRecord::Base
   validates_uniqueness_of :name
 
   has_many :current_users, :class_name => "User", :foreign_key => "current_account_id"
+  has_many :imports
 
   # Hook to Padma Account API
   # @param [TrueClass] cache: Specify if Cache should be used. default: true

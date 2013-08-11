@@ -1,1 +1,9 @@
-Index
+<% if @imports.empty? %>
+    <p><%= link_to "Create import!", new_import_path %></p>
+<% else %>
+    <ul>
+      <% @imports.each do |import| %>
+      <li><%= link_to import.id, import %></li>
+      <% end %>
+    </ul>
+<% end %>
