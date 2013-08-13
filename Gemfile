@@ -9,6 +9,7 @@ gem 'protected_attributes' # Rails 4 support for Mass Assignment Security
 gem 'devise', github: 'plataformatec/devise', :branch => 'rails4'
 gem 'devise_cas_authenticatable'
 gem 'carrierwave'
+gem 'fog'
 gem 'accounts_client'
 
 group :development, :test do
