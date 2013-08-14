@@ -19,6 +19,7 @@ class ApplicationController < ActionController::Base
       redirect_to home_path
       false
     end
+    true
   end
 
   def set_locale
@@ -33,7 +34,7 @@ class ApplicationController < ActionController::Base
   # Mocks CAS login in development
   def mock_login
     if Rails.env.development?
-      a = Account.find_or_create_by(name: "martinez")
+      a = Account.find_or_create_by(name: "development")
       user = User.find_or_create_by(username: "luis.perichon", current_account_id: a.id)
 
       sign_in(user)
