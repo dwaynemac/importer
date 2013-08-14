@@ -5,22 +5,12 @@ class ApplicationController < ActionController::Base
 
   before_filter :mock_login
   before_filter :authenticate_user!
-  before_filter :authorize_user!
   before_filter :require_padma_account
   before_filter :set_current_account
   before_filter :set_timezone
   before_filter :set_locale
 
   private
-
-  def authorize_user!
-    unless signed_in? && current_user.admin?
-      flash[:error] = "unauthorized access"
-      redirect_to home_path
-      false
-    end
-    true
-  end
 
   def set_locale
     if signed_in?

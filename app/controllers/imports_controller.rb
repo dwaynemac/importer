@@ -1,4 +1,4 @@
-class ImportsController < ApplicationController
+class ImportsController < UserApplicationController
   before_action :set_import, only: [:show, :edit, :update, :destroy]
 
   # GET /imports
