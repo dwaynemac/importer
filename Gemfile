@@ -41,6 +41,8 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
 
+gem 'rubyzip', :require => 'zip/zip'
+
 group :doc do
   gem 'sdoc', require: false
   gem 'yard', '~> 0.8.3'

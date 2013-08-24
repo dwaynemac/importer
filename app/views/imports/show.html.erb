@@ -1,4 +1,7 @@
 <p id="notice"><%= notice %></p>
 
+<%= link_to 'Zip', @import.import_file.url %>
+<%= link_to 'contacts', @import.import_file.contacts.url %>
+
 <%= link_to 'Edit', edit_import_path(@import) %> |
 <%= link_to 'Back', imports_path %>
