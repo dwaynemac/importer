@@ -28,8 +28,8 @@ class ImportsController < UserApplicationController
 
     respond_to do |format|
       if @import.save
-        format.html { redirect_to @import, notice: 'Import was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @import }
+        format.html { redirect_to edit_import_path(@import), notice: 'Import was successfully created.' }
+        format.json { render action: 'edit', status: :created, location: @import }
       else
         format.html { render action: 'new' }
         format.json { render json: @import.errors, status: :unprocessable_entity }
@@ -69,6 +69,6 @@ class ImportsController < UserApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def import_params
-      params.require(:import).permit(:import_file)
+      params.permit(:import).permit(:import_file)
     end
 end

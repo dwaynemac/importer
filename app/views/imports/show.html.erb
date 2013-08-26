@@ -1,4 +1,8 @@
-<p id="notice"><%= notice %></p>
+<div class="wizard">
+  <a><span class="badge">1</span> Choose import origin</a>
+  <a><span class="badge">2</span> Upload file</a>
+  <a class="current"><span class="badge">3</span> Check the import status</a>
+</div>
 
 <%= link_to 'Zip', @import.import_file.url %>
 <%= link_to 'contacts', @import.import_file.contacts.url %>

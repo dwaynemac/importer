@@ -1,9 +1,9 @@
-<% if @imports.empty? %>
-    <p><%= link_to "Create import!", new_import_path %></p>
-<% else %>
-    <ul>
-      <% @imports.each do |import| %>
-      <li><%= link_to import.id, import %></li>
-      <% end %>
-    </ul>
+<% unless @imports.empty? %>
+<h3>Import History</h3>
+<ul>
+  <% @imports.each do |import| %>
+      <li><%= link_to "Import from #{import.created_at}", import %></li>
+  <% end %>
+</ul>
 <% end %>
+<%= link_to "New import", new_import_path  %>
