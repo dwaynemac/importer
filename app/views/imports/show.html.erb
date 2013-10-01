@@ -7,5 +7,13 @@
 <%= link_to 'Zip', @import.import_file.url %>
 <%= link_to 'contacts', @import.import_file.contacts.url %>
 
+<h3>Import status</h3>
+<ul>
+  <% @import.import_modules.each do |im| %>
+  <li><%= im.name %> <span class="label"><%= im.status %></span></li>
+  <% end %>
+</ul>
+
+
 <%= link_to 'Edit', edit_import_path(@import) %> |
 <%= link_to 'Back', imports_path %>

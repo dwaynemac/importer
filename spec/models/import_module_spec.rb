@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-describe Module do
+describe ImportModule do
 
 end

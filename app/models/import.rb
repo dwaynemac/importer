@@ -5,5 +5,5 @@ class Import < ActiveRecord::Base
 
   attr_accessible :import_file
 
-  has_many :modules
+  has_many :import_modules
 end

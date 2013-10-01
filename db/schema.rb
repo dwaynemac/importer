@@ -19,17 +19,17 @@ ActiveRecord::Schema.define(version: 20131001140411) do
     t.datetime "updated_at"
   end
 
+  create_table "import_modules", force: true do |t|
+    t.integer "import_id"
+    t.string  "name"
+    t.string  "status"
+  end
+
   create_table "imports", force: true do |t|
     t.integer  "account_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "import_file"
-  end
-
-  create_table "modules", force: true do |t|
-    t.integer "import_id"
-    t.string  "name"
-    t.string  "status"
   end
 
   create_table "users", force: true do |t|
