@@ -69,6 +69,6 @@ class ImportsController < UserApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def import_params
-      params.permit(:import).permit(:import_file)
+      params[:import].permit(:import_file)
     end
 end

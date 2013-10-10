@@ -10,7 +10,7 @@
 <h3>Import status</h3>
 <ul>
   <% @import.import_modules.each do |im| %>
-  <li><%= im.name %> <span class="label"><%= im.status %></span></li>
+  <li><%= im.name %> <span class="label"><%= im.realtime_status %></span></li>
   <% end %>
 </ul>
 

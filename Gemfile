@@ -11,6 +11,7 @@ gem 'devise_cas_authenticatable'
 gem 'carrierwave'
 gem 'fog'
 gem 'accounts_client'
+gem 'contacts_client'
 
 group :development, :test do
   gem 'sqlite3'
@@ -44,6 +45,8 @@ gem 'jbuilder', '~> 1.2'
 gem 'rubyzip', :require => 'zip/zip'
 
 gem 'bootstrap-sass'
+
+gem 'rest-client'
 
 group :doc do
   gem 'sdoc', require: false
