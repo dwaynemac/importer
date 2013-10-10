@@ -24,7 +24,7 @@ class ImportsController < UserApplicationController
   # POST /imports
   # POST /imports.json
   def create
-    @import = current_user.current_account.imports.build(import_params)
+    @import = current_user.current_account.imports.build
 
     respond_to do |format|
       if @import.save
