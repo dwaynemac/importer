@@ -8,13 +8,15 @@ class KshemaImporter
   def process
     # Import contacts csv to padma_contacts
     if Rails.env == 'development'
+      # use local file path on development
       contacts_csv = open(@import.import_file.contacts.path)
     else
+      # use s3 file on production
       contacts_csv = open(@import.import_file.contacts.url)
     end
 
 
-
+    # Send file to contacts module using import api
     response = RestClient.post Contacts::HOST + '/v0/imports',
                     :app_key => Contacts::API_KEY,
                     :import => {
@@ -27,6 +29,7 @@ class KshemaImporter
                         id_scan_migrated padma_follow_id)
                     }
     if(response.code == 201)
+      # If import was created successfully create an import module that will show the status of this import
       import_id = JSON.parse(response)['id']
       @import.import_modules.create(name: "contacts", status_url: Contacts::HOST + '/v0/imports/' + import_id)
     end
