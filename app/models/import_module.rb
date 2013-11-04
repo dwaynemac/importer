@@ -4,7 +4,10 @@ class ImportModule < ActiveRecord::Base
   attr_accessible :name, :status, :status_url
 
   def realtime_status
-    response = RestClient.get status_url, :params => {:app_key => Contacts::API_KEY, 'import[account_name]' => import.account.name}
-    JSON.parse(response)['import']['status']
+    unless self.status == 'finished'
+      response = RestClient.get status_url, :params => status_params
+      self.update_attributes(status: JSON.parse(response)['import']['status'])
+    end
+    self.status
   end
 end

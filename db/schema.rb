@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131010182053) do
+ActiveRecord::Schema.define(version: 20131104150113) do
 
   create_table "accounts", force: true do |t|
     t.string   "name"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20131010182053) do
     t.string  "name"
     t.string  "status"
     t.string  "status_url"
+    t.string  "type"
   end
 
   create_table "imports", force: true do |t|
