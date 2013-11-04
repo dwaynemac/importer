@@ -13,6 +13,10 @@ gem 'fog'
 gem 'accounts_client'
 gem 'contacts_client'
 
+group :development do
+  gem 'git-pivotal-tracker-integration'
+end
+
 group :development, :test do
   gem 'sqlite3'
 

@@ -6,6 +6,12 @@ class KshemaImporter
   end
 
   def process
+    import_contacts
+  end
+
+  private
+
+  def import_contacts
     # Import contacts csv to padma_contacts
     if Rails.env == 'development'
       # use local file path on development
