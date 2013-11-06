@@ -39,4 +39,9 @@ class ContactsImportModule < ImportModule
     self.realtime_status == 'finished'
   end
 
+  #ContactImportModule (ContactImporter) is always ready
+  def ready?
+    true
+  end
+
 end

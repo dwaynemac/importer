@@ -7,6 +7,14 @@ class ImportModule < ActiveRecord::Base
   def status_params
   end
 
+  # override in child class
+  def finished?
+  end
+
+  # override in child class
+  def ready?
+  end
+
   def realtime_status
     return nil if status_url.nil?
     unless self.status == 'finished'
