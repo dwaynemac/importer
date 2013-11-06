@@ -14,6 +14,27 @@ class ImportFileUploader < CarrierWave::Uploader::Base
     end
   end
 
+  version :time_slots do
+    process :extract_file => :belgrano_horarios
+    def full_filename (for_file = model.import_file.file)
+      "time_slots.csv"
+    end
+  end
+
+  version :attendances do
+    process :extract_file => :belgrano_asistencias
+    def full_filename (for_file = model.import_file.file)
+      "attendances.csv"
+    end
+  end
+  
+  version :trial_lessons do
+    process :extract_file => :belgrano_pruebas
+    def full_filename (for_file = model.import_file.file)
+      "trail_lessons.csv"
+    end
+  end
+
   def extract_file(filename)
     file = nil
     Zip::ZipFile.open(current_path) do |zip_file|
