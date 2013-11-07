@@ -12,5 +12,7 @@ module Attendance
     HOST = "localhost:3015"
   elsif Rails.env.production?
     HOST = "padma-attendance.herokuapp.com"
+  elsif Rails.env.test?
+    HOST = "test"
   end
 end
