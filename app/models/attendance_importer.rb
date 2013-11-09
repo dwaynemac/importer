@@ -30,8 +30,8 @@ class AttendanceImporter < ImportModule
                                   ]
                                 }
     if response.code == 201
-      # If import was created successfully create a time_slot importer
-      #that will show the status of this import
+      # If import was created successfully create a attendance importer
+      # that will show the status of this import
       remote_import_id = JSON.parse(response.body)['id']
       self.update_attributes(status_url: Attendance::HOST + '/api/v0/imports/' + remote_import_id)
     end
