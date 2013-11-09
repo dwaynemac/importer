@@ -12,4 +12,8 @@ FactoryGirl.define do
     name "contactsimportmodule"
     import
   end
+  factory :attendance_importer do
+    name "attendanceimporter"
+    import
+  end
 end
