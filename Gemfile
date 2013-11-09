@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.0.0'
 
-gem 'rails', '4.0.0'
+gem 'rails', '4.0.1'
 
 gem 'cancan'
 gem 'protected_attributes' # Rails 4 support for Mass Assignment Security
@@ -11,7 +11,7 @@ gem 'devise_cas_authenticatable'
 gem 'carrierwave'
 gem 'fog'
 gem 'accounts_client'
-gem 'contacts_client'
+gem 'contacts_client', '~> 0.0.21'
 
 group :development do
   gem 'git-pivotal-tracker-integration'
