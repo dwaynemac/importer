@@ -31,7 +31,7 @@ class ImportFileUploader < CarrierWave::Uploader::Base
   version :trial_lessons do
     process :extract_file => :pruebas
     def full_filename (for_file = model.import_file.file)
-      "trail_lessons.csv"
+      "trial_lessons.csv"
     end
   end
 
