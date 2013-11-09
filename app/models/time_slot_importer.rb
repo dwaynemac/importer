@@ -12,7 +12,7 @@ class TimeSlotImporter < ImportModule
       csv = open(self.import.import_file.time_slots.path)
     else
       # use s3 file on production
-      csv = open(self.import_file.time_slots.url)
+      csv = open(self.import.import_file.time_slots.url)
     end
 
 
@@ -45,8 +45,8 @@ class TimeSlotImporter < ImportModule
     if response.code == 201
       # If import was created successfully create a time_slot importer
       #that will show the status of this import
-      import_id = JSON.parse(response.body)['id']
-      self.update_attributes(status_url: Attendance::HOST + '/api/v0/imports/' + import_id)
+      remote_import_id = JSON.parse(response.body)['id']
+      self.update_attributes(status_url: Attendance::HOST + '/api/v0/imports/' + remote_import_id)
     end
   end
 
