@@ -15,4 +15,9 @@ class ImportModule < ActiveRecord::Base
     end
     self.status
   end
+
+  def ready?(dependence_status = {})
+    return true if dependence.nil?
+    return dependence_status == :finished
+  end
 end
