@@ -18,7 +18,7 @@ describe ImportModule do
 
   describe ".delegate_ready_imports" do
     it "calls delegate_import on import_modules that are ready" do
-      import_module.update_attribute :status, ''
+      import_module
       ImportModule.any_instance.stub(:ready?).and_return(true)
       ImportModule.any_instance.should_receive(:delegate_import)
       ImportModule.delegate_ready_imports
@@ -29,7 +29,12 @@ describe ImportModule do
       ImportModule.any_instance.should_not_receive(:delegate_import)
       ImportModule.delegate_ready_imports
     end
-    it "wont call #ready? on finished import_modules" do
+    it "ignores import_modules that have already delegated" do
+      import_module.update_attribute :status_url, 'asdf/12'
+      ImportModule.any_instance.should_not_receive(:ready?)
+      ImportModule.delegate_ready_imports
+    end
+    it "ignores finished import_modules" do
       import_module.update_attribute :status, 'finished'
       ImportModule.any_instance.should_not_receive(:ready?)
       ImportModule.delegate_ready_imports

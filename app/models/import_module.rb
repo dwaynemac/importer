@@ -26,7 +26,7 @@ class ImportModule < ActiveRecord::Base
 
   # Queries for unfinished import_modules and delegates those that are ready
   def self.delegate_ready_imports
-    self.where.not(status: finished_status).each do |im|
+    self.where("status <> ? OR status IS NULL",finished_status).where(status_url: nil).each do |im|
       im.delegate_import if im.ready?
     end
   end
