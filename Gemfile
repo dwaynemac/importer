@@ -28,6 +28,8 @@ group :development, :test do
 
   gem 'foreman'
   gem 'subcontractor', '~> 0.6.1'
+
+  gem 'byebug', require: 'byebug'
 end
 
 group :production do
