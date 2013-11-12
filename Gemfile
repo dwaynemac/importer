@@ -5,13 +5,15 @@ ruby '2.0.0'
 gem 'rails', '4.0.1'
 
 gem 'cancan'
-gem 'protected_attributes' # Rails 4 support for Mass Assignment Security
+# protected_attributes version < 1.0.2 has some problems with Rails 4.0.1
+gem 'protected_attributes', '~> 1.0.4' # Rails 4 support for Mass Assignment Security
 gem 'devise', github: 'plataformatec/devise', :branch => 'rails4'
 gem 'devise_cas_authenticatable'
 gem 'carrierwave'
 gem 'fog'
 gem 'accounts_client'
 gem 'contacts_client', '~> 0.0.21'
+gem 'crm_client', :path => '/home/alex/workspace/crm_client'
 
 group :development do
   gem 'git-pivotal-tracker-integration'

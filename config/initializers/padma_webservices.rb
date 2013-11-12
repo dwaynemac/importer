@@ -5,3 +5,7 @@ end
 module Contacts
   API_KEY = ENV['contacts_key'] || CONFIG['contacts_key']
 end
+
+module Crm
+  API_KEY = ENV['crm_key'] || CONFIG['crm_key']
+end

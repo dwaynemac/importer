@@ -21,6 +21,13 @@ GIT
       railties (>= 3.2.6, < 5)
       warden (~> 1.2.1)
 
+PATH
+  remote: /home/alex/workspace/crm_client
+  specs:
+    crm_client (0.0.1)
+      logical_model (~> 0.5.5)
+      railties (>= 3.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -167,8 +174,8 @@ GEM
       nokogiri-happymapper (>= 0.5.4)
       rest-client (~> 1.6.0)
     polyglot (0.3.3)
-    protected_attributes (1.0.2)
-      activemodel (>= 4.0.0.beta, < 5.0)
+    protected_attributes (1.0.5)
+      activemodel (>= 4.0.1, < 5.0)
     rack (1.5.2)
     rack-test (0.6.2)
       rack (>= 1.0)
@@ -262,6 +269,7 @@ DEPENDENCIES
   carrierwave
   coffee-rails (~> 4.0.0)
   contacts_client (~> 0.0.21)
+  crm_client!
   devise!
   devise_cas_authenticatable
   execjs
@@ -272,7 +280,7 @@ DEPENDENCIES
   jbuilder (~> 1.2)
   jquery-rails
   pg
-  protected_attributes
+  protected_attributes (~> 1.0.4)
   rails (= 4.0.1)
   rails3_serve_static_assets!
   rails_log_stdout!
