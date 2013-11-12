@@ -23,4 +23,19 @@ class ImportModule < ActiveRecord::Base
     end
     self.status
   end
+
+  # Queries for unfinished import_modules and delegates those that are ready
+  def self.delegate_ready_imports
+    self.where.not(status: finished_status).each do |im|
+      im.delegate_import if im.ready?
+    end
+  end
+
+  private
+
+  # if child class has a different finished status
+  # this method should be overriden
+  def self.finished_status
+    'finished'
+  end
 end
