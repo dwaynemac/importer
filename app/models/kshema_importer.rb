@@ -16,7 +16,9 @@ class KshemaImporter
   private
 
   def proccess_attendance_imports
-    tsi = TimeSlotImporter.create(import: @import)
+    TimeSlotImporter.create(import: @import)
+    AttendanceImporter.create(import: @import)
+    TrialLessonImporter.create(import: @import)
   end
 
 end
