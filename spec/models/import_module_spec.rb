@@ -16,6 +16,11 @@ describe ImportModule do
     end
   end
 
+  describe ".update_statuses" do
+    it "calls realtime_status on unfinished import_modules"
+    it "wont call realtime_status on non-delegated import_modules"
+  end
+
   describe ".delegate_ready_imports" do
     it "calls delegate_import on import_modules that are ready" do
       import_module
