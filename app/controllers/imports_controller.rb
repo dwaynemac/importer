@@ -4,7 +4,7 @@ class ImportsController < UserApplicationController
   # GET /imports
   # GET /imports.json
   def index
-    @imports = current_user.current_account.imports.all
+    @imports = current_user.current_account.imports.load # .load is .all on rails 4
   end
 
   # GET /imports/1
@@ -25,7 +25,6 @@ class ImportsController < UserApplicationController
   # POST /imports.json
   def create
     @import = current_user.current_account.imports.build
-
     respond_to do |format|
       if @import.save
         format.html { redirect_to edit_import_path(@import), notice: 'Import was successfully created.' }

@@ -7,9 +7,18 @@ class KshemaImporter
 
   def process
     cim = ContactsImportModule.create(import: @import)
-    cim.delegate_import
+    
+    proccess_attendance_imports
 
-    # register other modules here
+    # delegations will be done on background
+  end
+
+  private
+
+  def proccess_attendance_imports
+    TimeSlotImporter.create(import: @import)
+    AttendanceImporter.create(import: @import)
+    TrialLessonImporter.create(import: @import)
   end
 
 end
