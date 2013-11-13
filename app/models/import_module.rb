@@ -26,16 +26,9 @@ class ImportModule < ActiveRecord::Base
 
   # Queries for unfinished import_modules and delegates those that are ready
   def self.delegate_ready_imports
-    self.where("status <> ? OR status IS NULL",finished_status).where(status_url: nil).each do |im|
+    # FIXME if an import_module's finished status is not "finished" this wont work for it.
+    self.where("status <> 'finished' OR status IS NULL").where(status_url: nil).each do |im|
       im.delegate_import if im.ready?
     end
-  end
-
-  private
-
-  # if child class has a different finished status
-  # this method should be overriden
-  def self.finished_status
-    'finished'
   end
 end
