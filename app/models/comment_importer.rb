@@ -33,4 +33,12 @@ class CommentImporter < ImportModule
       self.update_attributes(status_url: Crm::HOST + '/v0/imports/' + import_id)
     end
   end
+
+  def finished?
+    self.realtime_status == 'finished'
+  end
+
+  def ready?
+    self.import.import_modules.where(type: 'ContactsImportModule').first.finished?
+  end
 end

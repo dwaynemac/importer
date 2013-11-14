@@ -37,4 +37,7 @@ class FollowImporter < ImportModule
     self.realtime_status == 'finished'
   end
 
+  def ready?
+    self.import.import_modules.where(type: 'ContactsImportModule').first.finished?
+  end
 end

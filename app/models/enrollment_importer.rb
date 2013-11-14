@@ -36,4 +36,8 @@ class EnrollmentImporter < ImportModule
   def finished?
     self.realtime_status == 'finished'
   end
+
+  def ready?
+    self.import.import_modules.where(type: 'CommunicationImporter').first.finished?
+  end
 end

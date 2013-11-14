@@ -38,6 +38,6 @@ class DropOutImporter < ImportModule
   end
 
   def ready?
-    return true
+    self.import.import_modules.where(type: 'EnrollmentImportModule').first.finished?
   end
 end

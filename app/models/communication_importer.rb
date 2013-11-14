@@ -39,6 +39,6 @@ class CommunicationImporter < ImportModule
   end
 
   def ready?
-    return true
+    self.import.import_modules.where(type: 'ContactsImportModule').first.finished?
   end
 end
