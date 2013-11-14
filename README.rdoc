@@ -1,3 +1,6 @@
 == Importer {<img src="https://travis-ci.org/dwaynemac/importer.png" />}[https://travis-ci.org/dwaynemac/importer]
+{<img src="https://badge.fury.io/rb/importer.png" alt="Gem Version" />}[http://badge.fury.io/rb/importer]
+{<img src="https://codeclimate.com/github/dwaynemac/importer.png" />}[https://codeclimate.com/github/dwaynemac/importer]
+{<img src="https://gemnasium.com/dwaynemac/importer.png" alt="Dependecies" />}[https://gemnasium.com/dwaynemac/importer]
 
 
