@@ -1,5 +1,6 @@
 == Importer {<img src="https://travis-ci.org/dwaynemac/importer.png" />}[https://travis-ci.org/dwaynemac/importer]
 {<img src="https://codeclimate.com/github/dwaynemac/importer.png" />}[https://codeclimate.com/github/dwaynemac/importer]
 {<img src="https://gemnasium.com/dwaynemac/importer.png" alt="Dependecies" />}[https://gemnasium.com/dwaynemac/importer]
+{<img src="https://coveralls.io/repos/dwaynemac/importer/badge.png" alt="Coverage Status" />}[https://coveralls.io/r/dwaynemac/importer]
 
 
