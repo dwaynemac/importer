@@ -17,8 +17,24 @@ describe ImportModule do
   end
 
   describe ".update_statuses" do
-    it "calls realtime_status on unfinished import_modules"
-    it "wont call realtime_status on non-delegated import_modules"
+    before do
+      ImportModule.any_instance.stub(:realtime_status).and_return(true)
+    end
+    it "calls realtime_status on unfinished and delegated import_modules" do
+      import_module.update_attributes(status: 'pending', status_url: 'www')
+      ImportModule.any_instance.should_receive(:realtime_status)
+      ImportModule.update_statuses
+    end
+    it "won't call realtime_status on finished import_modules" do
+      import_module.update_attributes(status: 'finished', status_url: 'www')
+      ImportModule.any_instance.should_not_receive(:realtime_status)
+      ImportModule.update_statuses
+    end
+    it "won't call realtime_status on not-delegated import_modules" do
+      import_module.update_attributes(status: 'pending', status_url: nil)
+      ImportModule.any_instance.should_not_receive(:realtime_status)
+      ImportModule.update_statuses
+    end
   end
 
   describe ".delegate_ready_imports" do
