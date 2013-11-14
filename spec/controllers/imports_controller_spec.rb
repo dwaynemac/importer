@@ -20,19 +20,35 @@ require 'spec_helper'
 
 describe ImportsController do
 
-  before (:each) do
-    @user = build(:user)
-    User.any_instance.stub(:padma_user).and_return(PadmaUser.new(:username => @user.username, :email => "test@test.com"))
-    Account.any_instance.stub(:padma).and_return(PadmaAccount.new(:name => @user.current_account.name))
-    User.any_instance.stub(:enabled_accounts).and_return([PadmaAccount.new(:name => @user.current_account.name)])
+  before do
+    Import.delete_all
+    a = Account.first || create(:account)
+    @user = build(:user, current_account_id: a.id)
+
+    # mock interaction with padma-accounts-ws
+    padma_account = PadmaAccount.new(name: @user.current_account.name)
+    PadmaAccount.stub(:find).and_return padma_account
+    padma_user = PadmaUser.new(
+      username: @user.username,
+      email: "test@test.com",
+      current_account: padma_account,
+      current_account_name: a.name
+    )
+    User.any_instance.stub(:padma).and_return(padma_user)
+
+    Account.any_instance.stub(:padma).and_return(padma_account)
+    User.any_instance.stub(:enabled_accounts).and_return([padma_account])
+
+    # user is admin
     User.any_instance.stub(:admin?).and_return(true)
-    @user.save
+
+    @user.save!
     sign_in @user
   end
 
   describe "GET index" do
     it "assigns all imports as @imports" do
-      import = create(:import, :account => @user.current_account)
+      import = create(:import, account: @user.current_account)
       get :index, {}
       assigns(:imports).should eq([import])
     end
@@ -40,8 +56,8 @@ describe ImportsController do
 
   describe "GET show" do
     it "assigns the requested import as @import" do
-      import = create(:import, :account => @user.current_account)
-      get :show, {:id => import.to_param}
+      import = create(:import, account: @user.current_account)
+      get :show, {id: import.to_param}
       assigns(:import).should eq(import)
     end
   end
@@ -75,9 +91,9 @@ describe ImportsController do
         assigns(:import).should be_persisted
       end
 
-      it "redirects to the created import" do
+      it "redirects to the created import edit page" do
         post :create, {:import => attributes_for(:import)}
-        response.should redirect_to(Import.last)
+        response.should redirect_to(edit_import_path(Import.last))
       end
     end
 
@@ -106,8 +122,8 @@ describe ImportsController do
         # specifies that the Import created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        Import.any_instance.should_receive(:update).with({ "these" => "params" })
-        put :update, {:id => import.to_param, :import => { "these" => "params" }}
+        Import.any_instance.should_receive(:update).with({ "import_file" => "params" })
+        put :update, {:id => import.to_param, :import => { "import_file" => "params" }}
       end
 
       it "assigns the requested import as @import" do

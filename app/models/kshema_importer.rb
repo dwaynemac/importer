@@ -9,6 +9,9 @@ class KshemaImporter
     cim = ContactsImportModule.create(import: @import)
 
     process_crm_imports
+    proccess_attendance_imports
+
+    # delegations will be done on background
   end
 
   private
@@ -19,6 +22,12 @@ class KshemaImporter
     DropOutImporter.create(import: @import)
     EnrollmentImporter.create(import: @import)
     FollowImporter.create(import: @import)
+  end
+
+  def proccess_attendance_imports
+    TimeSlotImporter.create(import: @import)
+    AttendanceImporter.create(import: @import)
+    TrialLessonImporter.create(import: @import)
   end
 
 end
