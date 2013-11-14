@@ -279,6 +279,7 @@ DEPENDENCIES
   rails (= 4.0.0)
   rails3_serve_static_assets!
   rails_log_stdout!
+  rake
   rest-client
   rspec-rails
   rubyzip

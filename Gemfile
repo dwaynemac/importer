@@ -17,21 +17,23 @@ gem 'zip'
 
 group :development do
   gem 'git-pivotal-tracker-integration'
-end
-
-group :development, :test do
-  gem 'sqlite3'
-
-  gem 'rspec-rails'
-  gem 'factory_girl_rails'
-
-  gem 'better_errors'
-  gem 'binding_of_caller'
 
   gem 'foreman'
   gem 'subcontractor', '~> 0.6.1'
 
   gem 'byebug', require: 'byebug'
+
+  gem 'better_errors'
+  gem 'binding_of_caller'
+end
+
+group :development, :test do
+  gem 'sqlite3'
+
+  gem 'rake' # add rake dependency for travis-ci
+
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
 end
 
 group :production do
