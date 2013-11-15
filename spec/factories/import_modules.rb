@@ -8,6 +8,22 @@ FactoryGirl.define do
     name 'communicationimporter'
     import
   end
+  factory :comment_importer do
+    name 'commentimporter'
+    import
+  end
+  factory :drop_out_importer do
+    name 'dropoutimporter'
+    import
+  end
+  factory :follow_importer do
+    name 'followimporter'
+    import
+  end
+  factory :enrollment_importer do
+    name 'enrollmentimporter'
+    import
+  end
   factory :time_slot_importer do
     name "timeslotimporter"
     import

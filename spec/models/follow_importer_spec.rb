@@ -1,9 +1,9 @@
 require 'spec_helper'
 
-describe CommunicationImporter do
+describe FollowImporter do
 
-  let(:commimp) { create(:communication_importer) }
-  let(:cim) { create(:contacts_import_module, import: commimp.import) }
+  let(:follow_imp) { create(:follow_importer) }
+  let(:cim) { create(:contacts_import_module, import: follow_imp.import) }
 
   describe "#ready?" do
     before do
@@ -16,7 +16,7 @@ describe CommunicationImporter do
         ContactsImportModule.any_instance.stub(:finished?) {true}
       end
       it "should be ready" do
-        commimp.ready?.should == true
+        follow_imp.ready?.should == true
       end
     end
 
@@ -25,7 +25,7 @@ describe CommunicationImporter do
         ContactsImportModule.any_instance.stub(:finished?) {false}
       end
       it "shouldn't be ready" do
-        commimp.ready?.should == false
+        follow_imp.ready?.should == false
       end
     end
 
@@ -33,8 +33,8 @@ describe CommunicationImporter do
 
   describe "#delegate_import" do
     before do
-      commimp.stub_chain(:import_file, :communications, :url).and_return("x_path")
-      commimp.stub_chain(:open, :read) {"x_file"}
+      follow_imp.stub_chain(:import_file, :follows, :url).and_return("x_path")
+      follow_imp.stub_chain(:open, :read) {"x_file"}
     end
 
     describe "if crm-ws responds ok" do
@@ -43,8 +43,8 @@ describe CommunicationImporter do
         RestClient.stub(:post).and_return(my_response)
       end
       it "should set status_url" do
-        commimp.delegate_import()
-        commimp.status_url.should == "localhost:3000/api/v0/imports/1"
+        follow_imp.delegate_import()
+        follow_imp.status_url.should == "localhost:3000/api/v0/imports/1"
       end
     end
   end

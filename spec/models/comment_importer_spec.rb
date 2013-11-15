@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe CommunicationImporter do
+describe CommentImporter do
 
-  let(:commimp) { create(:communication_importer) }
+  let(:commimp) { create(:comment_importer) }
   let(:cim) { create(:contacts_import_module, import: commimp.import) }
 
   describe "#ready?" do
@@ -33,7 +33,7 @@ describe CommunicationImporter do
 
   describe "#delegate_import" do
     before do
-      commimp.stub_chain(:import_file, :communications, :url).and_return("x_path")
+      commimp.stub_chain(:import_file, :comments, :url).and_return("x_path")
       commimp.stub_chain(:open, :read) {"x_file"}
     end
 

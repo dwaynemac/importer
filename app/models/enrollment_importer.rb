@@ -2,17 +2,17 @@ class EnrollmentImporter < ImportModule
 
   # @return [Hash] params that should be sent to status_url
   def status_params
-    {:app_key => Crm::API_KEY, 'import[account_name]' => import.account.name}
+    {app_key: Crm::API_KEY, import: {account_name: import.account.name}}
   end
 
   def delegate_import
     # Import enrollment csv to padma_contacts
     if Rails.env == 'development'
       # use local file path on development
-      enrollment_csv = open(@import.import_file.enrollment.path)
+      enrollment_csv = open(self.import.import_file.enrollments.path)
     else
       # use s3 file on production
-      enrollment_csv = open(@import.import_file.enrollment.url)
+      enrollment_csv = open(self.import.import_file.enrollments.url)
     end
 
 
@@ -21,15 +21,15 @@ class EnrollmentImporter < ImportModule
     response = RestClient.post Crm::HOST + '/v0/imports',
                     :app_key => Crm::API_KEY,
                     :import => {
-                      :account_name => @import.account.name,
+                      :account_name => self.import.account.name,
                       :object => 'enrollment',
                       :file => enrollment_csv,
                       :headers => %w(id fecha instructor_id persona_id contact_id school_id)
                     }
     if(response.code == 201)
       # If import was created successfully create an import module that will show the status of this import
-      import_id = JSON.parse(response)['id']
-      self.update_attributes(status_url: Crm::HOST + '/v0/imports/' + import_id)
+      import_id = JSON.parse(response.body)['id']
+      self.update_attributes(status_url: Crm::HOST + '/api/v0/imports/' + import_id)
     end
   end
   
