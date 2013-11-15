@@ -9,6 +9,10 @@ class Import < ActiveRecord::Base
 
   after_save :process_import_file
 
+  def finished?
+    self.import_modules.load.select{ |im| not im.finished?}.count() == 0
+  end
+
   def process_import_file
     if import_file.present?
       importer = KshemaImporter.new(self)
