@@ -28,6 +28,10 @@ group :development do
   gem 'binding_of_caller'
 end
 
+group :test do
+  gem 'coveralls', require: false
+end
+
 group :development, :test do
   gem 'sqlite3'
 
