@@ -289,8 +289,8 @@ DEPENDENCIES
   carrierwave
   coffee-rails (~> 4.0.0)
   contacts_client (~> 0.0.21)
-  crm_client!
   coveralls
+  crm_client!
   devise (~> 3.1)
   devise_cas_authenticatable
   execjs
