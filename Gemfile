@@ -12,7 +12,7 @@ gem 'carrierwave'
 gem 'fog'
 gem 'accounts_client'
 gem 'contacts_client', '~> 0.0.21'
-gem 'crm_client'
+gem 'crm_client', '~> 0.0.1'
 
 gem 'zip'
 
