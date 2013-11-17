@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131104150113) do
+ActiveRecord::Schema.define(version: 20131115212419) do
 
   create_table "accounts", force: true do |t|
     t.string   "name"
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 20131104150113) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "import_file"
+    t.string   "status",      default: "pending"
   end
 
   create_table "users", force: true do |t|
