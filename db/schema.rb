@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131115212419) do
+ActiveRecord::Schema.define(version: 20131117184003) do
 
   create_table "accounts", force: true do |t|
     t.string   "name"
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20131115212419) do
   create_table "import_modules", force: true do |t|
     t.integer "import_id"
     t.string  "name"
-    t.string  "status"
+    t.string  "status",     default: "pending"
     t.string  "status_url"
     t.string  "type"
   end
