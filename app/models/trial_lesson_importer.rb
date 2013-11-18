@@ -49,4 +49,8 @@ class TrialLessonImporter < ImportModule
     self.import.import_modules.where(type: 'TimeSlotImporter').first.finished?
   end
 
+  def my_name
+    "Trial Lessons"
+  end
+
 end

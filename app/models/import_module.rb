@@ -3,6 +3,8 @@ class ImportModule < ActiveRecord::Base
 
   attr_accessible :name, :status, :status_url, :import
 
+  after_initialize :set_name
+
   def self.delegated
     self.where.not(status_url: nil)
   end
@@ -25,6 +27,16 @@ class ImportModule < ActiveRecord::Base
 
   # override in child class
   def ready?
+  end
+
+  # override in child class
+  def my_name
+  end
+
+  def set_name
+    if new_record?
+      self.name = self.my_name if self.name.nil?
+    end
   end
 
   def realtime_status

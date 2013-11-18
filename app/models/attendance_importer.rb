@@ -45,4 +45,8 @@ class AttendanceImporter < ImportModule
     self.import.import_modules.where(type: 'TimeSlotImporter').first.finished?
   end
 
+  def my_name
+    "Attendances"
+  end
+
 end
