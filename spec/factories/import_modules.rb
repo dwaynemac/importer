@@ -12,6 +12,10 @@ FactoryGirl.define do
     name 'commentimporter'
     import
   end
+  factory :personas_comment_importer do
+    name 'personascommentimporter'
+    import
+  end
   factory :drop_out_importer do
     name 'dropoutimporter'
     import

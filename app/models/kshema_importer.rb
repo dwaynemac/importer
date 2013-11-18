@@ -19,6 +19,7 @@ class KshemaImporter
   def process_crm_imports
     CommunicationImporter.create(import: @import)
     CommentImporter.create(import: @import)
+    PersonasCommentImporter.create(import: @import)
     DropOutImporter.create(import: @import)
     EnrollmentImporter.create(import: @import)
     FollowImporter.create(import: @import)

@@ -14,6 +14,13 @@ class ImportFileUploader < CarrierWave::Uploader::Base
     end
   end
 
+  version :personas do
+    process :extract_file => :personas
+    def full_filename (for_file = model.import_file.file)
+      "personas.csv"
+    end
+  end
+
   version :enrollments do
     process :extract_file => :enrollment
     def full_filename (for_file = model.import_file.file)
