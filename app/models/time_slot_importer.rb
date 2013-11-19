@@ -58,4 +58,8 @@ class TimeSlotImporter < ImportModule
     self.import.import_modules.where(type: 'ContactsImportModule').first.finished?
   end
 
+  def my_name
+    "Time Slots"
+  end
+
 end

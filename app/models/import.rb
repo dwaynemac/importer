@@ -3,11 +3,15 @@ class Import < ActiveRecord::Base
 
   mount_uploader :import_file, ImportFileUploader
 
-  attr_accessible :import_file
+  attr_accessible :import_file, :status
 
   has_many :import_modules
 
   after_save :process_import_file
+
+  def finished?
+    return realtime_status == 'finished'
+  end
 
   def process_import_file
     if import_file.present?
@@ -15,4 +19,13 @@ class Import < ActiveRecord::Base
       importer.process
     end
   end
+
+  def realtime_status 
+    return status if status == 'finished'
+    if import_modules.load.select{ |im| not im.finished? }.count() == 0
+      update_attribute(:status, 'finished')
+    end
+    status
+  end
+
 end

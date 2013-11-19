@@ -44,4 +44,8 @@ class ContactsImportModule < ImportModule
     true
   end
 
+  def my_name
+    "Contacts"
+  end
+
 end

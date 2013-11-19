@@ -8,9 +8,10 @@
 <%= link_to 'contacts', @import.import_file.contacts.url %>
 
 <h3>Import status</h3>
+<h5>Overall status: <span class="label label-default overall-status"><%= @import.realtime_status %></span></h5>
 <ul>
   <% @import.import_modules.each do |im| %>
-  <li><%= im.name %> <span class="label"><%= im.realtime_status %></span></li>
+  <li><%= im.name %> <span class="label label-default"><%= im.realtime_status %></span></li>
   <% end %>
 </ul>
 
