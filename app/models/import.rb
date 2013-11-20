@@ -22,7 +22,7 @@ class Import < ActiveRecord::Base
 
   def realtime_status 
     return status if status == 'finished'
-    if import_modules.load.select{ |im| not im.finished? }.count() == 0
+    if import_modules.load.select{ |im| not im.finished? }.count == 0
       update_attribute(:status, 'finished')
     end
     status
