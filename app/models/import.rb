@@ -14,7 +14,7 @@ class Import < ActiveRecord::Base
   end
 
   def process_import_file
-    if import_file.present?
+    if import_file.present? and not already_processed?
       importer = KshemaImporter.new(self)
       importer.process
     end
@@ -26,6 +26,12 @@ class Import < ActiveRecord::Base
       update_attribute(:status, 'finished')
     end
     status
+  end
+
+  private
+  
+  def already_processed?
+    import_modules.load.count > 0
   end
 
 end
