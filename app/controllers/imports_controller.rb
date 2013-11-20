@@ -10,6 +10,7 @@ class ImportsController < UserApplicationController
   # GET /imports/1
   # GET /imports/1.json
   def show
+    @import.import_modules.update_statuses
   end
 
   # GET /imports/new

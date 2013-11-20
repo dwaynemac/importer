@@ -21,7 +21,8 @@ require 'spec_helper'
 describe ImportsController do
 
   before do
-    Import.delete_all
+    Import.destroy_all
+
     a = Account.first || create(:account)
     @user = build(:user, current_account_id: a.id)
 
@@ -55,10 +56,21 @@ describe ImportsController do
   end
 
   describe "GET show" do
+    let(:import){create(:import, account: @user.current_account)}
     it "assigns the requested import as @import" do
-      import = create(:import, account: @user.current_account)
       get :show, {id: import.to_param}
       assigns(:import).should eq(import)
+    end
+    it "calls realtime_status on each import_module of this import" do
+      create(:import_module, import: import, status_url: 'import/as', status: 'working')
+      ImportModule.any_instance.should_receive(:realtime_status).and_return true
+      get :show, {id: import.id}
+    end
+    it "wont call realtime_status on other import import_modules" do 
+      other_import = create(:import)
+      create(:import_module, import: other_import, status_url: 'other_import/as', status: 'working')
+      ImportModule.any_instance.should_not_receive :realtime_status
+      get :show, {id: import.id}
     end
   end
 
