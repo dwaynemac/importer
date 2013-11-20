@@ -58,7 +58,11 @@ class ImportModule < ActiveRecord::Base
   def self.delegate_ready_imports
     # FIXME if an import_module's finished status is not "finished" this wont work for it.
     self.not_finished.not_delegated.each do |im|
-      im.delegate_import if im.ready?
+      begin
+        im.delegate_import if im.ready?
+      rescue Errno::ECONNREFUSED => e
+        Rails.logger.info "#{e.message} Failed connection to #{im.name}"
+      end
     end
   end
 end
