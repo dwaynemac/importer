@@ -16,5 +16,5 @@
 </ul>
 
 
-<%= link_to 'Edit', edit_import_path(@import) %> |
+<% if not @import.finished? %> <%= link_to 'Edit', edit_import_path(@import) %> | <% end %> 
 <%= link_to 'Back', imports_path %>
