@@ -18,19 +18,19 @@ class TrialLessonImporter < ImportModule
 
     # Send file to attendance module using import api
     response = RestClient.post  Attendance::HOST + '/api/v0/imports',
-                                :app_key => Attendance::API_KEY,
-                                :import => {
-                                  :object => 'TrialLesson',
-                                  :account_name => self.import.account.name,
-                                  :csv_file => csv,
-                                  :headers => [
-                                    nil, #external_id
+                                app_key: Attendance::API_KEY,
+                                import: {
+                                  object: 'TrialLesson',
+                                  account_name: self.import.account.name,
+                                  csv_file: csv,
+                                  headers: [
+                                    '', #external_id
                                     'contact_external_id',
                                     'time_slot_external_id',
                                     'padma_uid',
                                     'trial_on',
-                                    nil, #created_at
-                                    nil, #updated_at
+                                    '', #created_at
+                                    '', #updated_at
                                     'archived',
                                     'absence_reason',
                                     'confirmed',

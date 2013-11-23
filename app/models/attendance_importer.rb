@@ -19,18 +19,18 @@ class AttendanceImporter < ImportModule
     # Send file to attendance module using import api
     # first header: external id, fifth and sixth headers: created at, updated at
     response = RestClient.post  Attendance::HOST + '/api/v0/imports',
-                                :app_key => Attendance::API_KEY,
-                                :import => {
-                                  :object => 'Attendance',
-                                  :account_name => self.import.account.name,
-                                  :csv_file => csv,
-                                  :headers => [
-                                    nil,
+                                app_key: Attendance::API_KEY,
+                                import: {
+                                  object: 'Attendance',
+                                  account_name: self.import.account.name,
+                                  csv_file: csv,
+                                  headers: [
+                                    '',
                                     'time_slot_external_id',
                                     'contact_external_id',
                                     'attendance_on',
-                                    nil,
-                                    nil
+                                    '',
+                                    ''
                                   ]
                                 }
     if response.code == 201
