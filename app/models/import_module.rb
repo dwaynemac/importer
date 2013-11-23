@@ -60,7 +60,7 @@ class ImportModule < ActiveRecord::Base
     self.not_finished.not_delegated.each do |im|
       begin
         im.delegate_import if im.ready?
-      rescue Errno::ECONNREFUSED => e
+      rescue Errno::ECONNREFUSED, RestClient::InternalServerError => e
         Rails.logger.info "#{e.message} Failed connection to #{im.name}"
       end
     end
