@@ -47,7 +47,7 @@ class ImportModule < ActiveRecord::Base
     return self.status if status_url.nil?
     unless self.status == 'finished'
       response = RestClient.get status_url, :params => status_params
-      self.update_attributes(status: parse_status)
+      self.update_attributes(status: parse_status(response))
     end
     self.status
   end
