@@ -22,6 +22,10 @@ class ImportModule < ActiveRecord::Base
   end
 
   # override in child class
+  def parse_status
+  end
+  
+  # override in child class
   def finished?
   end
 
@@ -43,7 +47,7 @@ class ImportModule < ActiveRecord::Base
     return self.status if status_url.nil?
     unless self.status == 'finished'
       response = RestClient.get status_url, :params => status_params
-      self.update_attributes(status: JSON.parse(response)['import']['status'])
+      self.update_attributes(status: parse_status)
     end
     self.status
   end

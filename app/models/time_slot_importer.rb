@@ -4,6 +4,10 @@ class TimeSlotImporter < ImportModule
   def status_params
     {:app_key => Attendance::API_KEY}
   end
+
+  def parse_status (response)
+    JSON.parse(response)['status']
+  end
   
   # Import time_slots csv to attendance
   def delegate_import

@@ -5,6 +5,10 @@ class TrialLessonImporter < ImportModule
     {:app_key => Attendance::API_KEY}
   end
 
+  def parse_status (response)
+    JSON.parse(response)['status']
+  end
+ 
   def delegate_import
     if Rails.env == 'development'
       csv = open(self.import.import_file.trial_lessons.path)

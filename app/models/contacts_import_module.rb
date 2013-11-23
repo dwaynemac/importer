@@ -5,6 +5,10 @@ class ContactsImportModule < ImportModule
     {:app_key => Contacts::API_KEY, 'import[account_name]' => import.account.name}
   end
 
+  def parse_status (response)
+    JSON.parse(response)['import']['status']
+  end
+ 
   def delegate_import
     # Import contacts csv to padma_contacts
     if Rails.env == 'development'
