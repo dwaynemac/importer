@@ -41,7 +41,7 @@ class TrialLessonImporter < ImportModule
       # If import was created successfully create a trial lesson importer
       # that will show the status of this import
       remote_import_id = JSON.parse(response.body)['id']
-      self.update_attributes(status_url: Attendance::HOST + '/api/v0/imports/' + remote_import_id)
+      self.update_attributes(status_url: Attendance::HOST + '/api/v0/imports/' + remote_import_id.to_s)
     end
   end
   
