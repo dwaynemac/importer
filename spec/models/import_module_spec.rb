@@ -10,8 +10,8 @@ describe ImportModule do
 
   describe "#realtime_status" do
     describe "if status_url is nil" do
-      it "returns pending" do
-        import_module.realtime_status.should == 'pending'
+      it "returns ready" do
+        import_module.realtime_status.should == 'ready'
       end
     end
   end
