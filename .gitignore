@@ -6,8 +6,10 @@
 /.env
 .idea
 /.ruby-gemset
-/config/environment_variables.yml
 /public/*
 *.swp
 /coverage
 Procfile.dev
+
+# Ignore application configuration
+/config/application.yml

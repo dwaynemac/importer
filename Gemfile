@@ -13,6 +13,8 @@ gem 'fog'
 gem 'accounts_client'
 gem 'contacts_client', '~> 0.0.21'
 
+gem 'figaro'
+
 gem 'zip'
 
 group :development do
