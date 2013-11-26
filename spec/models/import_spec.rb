@@ -30,8 +30,23 @@ describe Import do
     end
     it "shouldn't make a query if it has finished" do
       import.update_attribute(:status, 'finished')
-      ContactsImportModule.any_instance.should_not_receive(:finished?)
+      ContactsImportModule.any_instance.should_not_receive(:status)
       import.realtime_status
+    end
+    it "shouldn't make a query if it has failed" do
+      import.update_attribute(:status, 'failed')
+      ContactsImportModule.any_instance.should_not_receive(:status)
+      import.realtime_status
+    end
+    it "should be failed if at least one has failed" do
+      ContactsImportModule.any_instance.stub(:status).and_return('failed')
+      TimeSlotImporter.any_instance.stub(:status).and_return('working')
+      import.realtime_status.should == 'failed'
+    end
+    it "should be working if at least one is working (but no one failed)" do
+      ContactsImportModule.any_instance.stub(:status).and_return('finished')
+      TimeSlotImporter.any_instance.stub(:status).and_return('working')
+      import.realtime_status.should == 'working'
     end
   end
 
