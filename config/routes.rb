@@ -1,4 +1,5 @@
 Importer::Application.routes.draw do
+  get "import_modules/failed_rows"
   devise_for :users
   devise_scope :users do
     get "/login", :to => "devise/cas_sessions#new"
