@@ -48,6 +48,11 @@ describe Import do
       TimeSlotImporter.any_instance.stub(:status).and_return('working')
       import.realtime_status.should == 'working'
     end
+    it "should be pending if at least one is pending (but no one failed)" do
+      ContactsImportModule.any_instance.stub(:status).and_return('pending')
+      TimeSlotImporter.any_instance.stub(:status).and_return('working')
+      import.realtime_status.should == 'pending'
+    end
   end
 
   let(:import_file) do
