@@ -1,7 +1,7 @@
 class ImportModule < ActiveRecord::Base
   belongs_to :import
 
-  attr_accessible :name, :status, :status_url, :import
+  attr_accessible :name, :status, :status_url, :import, :failed_rows
 
   after_initialize :set_name
 
