@@ -4,10 +4,6 @@ class ContactsImportModule < ImportModule
   def status_params
     {:app_key => Contacts::API_KEY, 'import[account_name]' => import.account.name}
   end
-
-  def parse_status (response)
-    JSON.parse(response)['import']['status']
-  end
  
   def delegate_import
     # Import contacts csv to padma_contacts
@@ -50,6 +46,22 @@ class ContactsImportModule < ImportModule
 
   def my_name
     "Contacts"
+  end
+
+  def realtime_status
+    if self.status_url.nil? || self.status == 'finished' || self.status == 'failed'
+      return self.status
+    end
+    
+    json = JSON.parse(RestClient.get status_url, :params => status_params)
+    if json['import']['failed_rows'].to_i > 0 and json['import']['status'] == 'finished'
+      self.update_attribute(:failed_rows, true)
+      self.update_attribute(:status, 'pending')
+    else
+      self.update_attribute(:status, json['import']['status'])
+    end
+
+    self.status
   end
 
 end
