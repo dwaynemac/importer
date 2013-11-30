@@ -3,6 +3,8 @@ class ImportModule < ActiveRecord::Base
 
   attr_accessible :name, :status, :status_url, :import, :failed_rows, :ignore_failed_rows
 
+  alias_attribute :resource_uri, :status_url
+
   after_initialize :set_name
 
   def self.delegated

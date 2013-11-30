@@ -34,6 +34,17 @@ class ContactsImportModule < ImportModule
       self.update_attributes(status_url: Contacts::HOST + '/v0/imports/' + remote_import_id)
     end
   end
+
+
+  # destroys import on remote module and then destroys self
+  def rollback
+    response = RestClient.delete resource_uri, app_key: Contacts::API_KEY
+    if response.code == 200
+      self.destroy
+    else
+      return false
+    end
+  end
   
   def finished?
     self.realtime_status == 'finished'
