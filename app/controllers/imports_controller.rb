@@ -10,14 +10,6 @@ class ImportsController < UserApplicationController
   # GET /imports/1
   # GET /imports/1.json
   def show
-    if not params[:continue].nil?
-      im = ImportModule.find(params[:import_module_id])
-      if params[:continue] == true 
-        im.update_attribute(:status, 'finished')
-      else
-        im.update_attribute(:status, 'failed')
-      end
-    end
     @import.realtime_status
   end
 

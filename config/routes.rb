@@ -1,6 +1,4 @@
 Importer::Application.routes.draw do
-  get "import_modules/failed_rows/:id", :to => "import_modules#failed_rows"
-
   devise_for :users
   devise_scope :users do
     get "/login", :to => "devise/cas_sessions#new"
@@ -8,6 +6,11 @@ Importer::Application.routes.draw do
   end
 
   resources :imports
+  resources :import_modules do
+    member do
+      get :failed_rows
+    end
+  end
   root to: 'imports#index'
   get 'home' => 'home#show'
 end

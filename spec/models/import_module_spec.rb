@@ -16,6 +16,27 @@ describe ImportModule do
     end
   end
 
+  describe "#ignore_failed_rows" do
+    describe "when status is not 'pending'" do
+      before { import_module.update_attribute :status, 'ready' }
+      it "doesn't change status" do
+        import_module.ignore_failed_rows='true'
+        import_module.reload.status.should == 'ready'
+      end
+    end
+    describe "when status is 'pending'" do
+      before { import_module.update_attribute :status, 'pending' }
+      it "sets status :finished if 'true' if given" do
+        import_module.ignore_failed_rows='true'
+        import_module.reload.status.should == 'finished'
+      end
+      it "sets status :failed if other value if given" do
+        import_module.ignore_failed_rows='false'
+        import_module.reload.status.should == 'failed'
+      end
+    end
+  end
+
   describe ".update_statuses" do
     before do
       ImportModule.any_instance.stub(:realtime_status).and_return(true)

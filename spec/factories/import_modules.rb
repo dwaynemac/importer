@@ -3,6 +3,7 @@
 FactoryGirl.define do
   factory :import_module do
     name 'contact'
+    import
   end
   factory :time_slot_importer do
     name "timeslotimporter"

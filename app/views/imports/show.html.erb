@@ -15,10 +15,10 @@
     <%= im.name %> <span class="label label-default"><%= im.status %></span>
     <% if im.status == 'pending' %>
         There are failed rows! Do you want to continue?
-        <%= link_to "Yes", import_path(id: @import.id, continue: true, import_module_id: im.id) %>
-        <%= link_to "No", import_path(id: @import.id, continue: false, import_module_id: im.id) %>
+        <%= link_to "Yes", import_module_path(id: im.id, import_module: {ignore_failed_rows: 'true'}), method: :put %>
+        <%= link_to "No", import_module_path(id: im.id, import_module: {ignore_failed_rows: 'false'}), method: :put %>
     <% elsif im.status == 'failed' and im.failed_rows %>
-        <%= link_to "Failed Rows CSV", controller: :import_modules, action: :failed_rows, format: :csv, id: im.id %>
+        <%= link_to "Failed Rows CSV", failed_rows_import_module_path(im, format: 'csv') %>
     <% end %>
   </li>
   <% end %>

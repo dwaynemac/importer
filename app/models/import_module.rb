@@ -1,7 +1,7 @@
 class ImportModule < ActiveRecord::Base
   belongs_to :import
 
-  attr_accessible :name, :status, :status_url, :import, :failed_rows
+  attr_accessible :name, :status, :status_url, :import, :failed_rows, :ignore_failed_rows
 
   after_initialize :set_name
 
@@ -15,6 +15,16 @@ class ImportModule < ActiveRecord::Base
 
   def self.not_finished
     self.where("status <> 'finished' OR status IS NULL")
+  end
+
+  def ignore_failed_rows=(val)
+    return unless self.status == 'pending'
+
+    if val == 'true'
+      self.update_attribute :status, 'finished'
+    else
+      self.update_attribute :status, 'failed'
+    end
   end
 
   # override in child class
