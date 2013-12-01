@@ -13,6 +13,17 @@ class Import < ActiveRecord::Base
     return realtime_status == 'finished'
   end
 
+  # @return [Boolean]
+  def can_rollback?
+    # if a module other that contacts started running we can't rollback
+    if self.import_modules.select{|im| im.type != 'ContactsImportModule' && im.status.in?(%W(working finished)) }.count > 0
+      return false
+    else
+      contacts_module = self.import_modules.select{|im| im.type == 'ContactsImportModule' }.first
+      (contacts_module.present? && (contacts_module.failed? && !contacts_module.rollbacked?))
+    end
+  end
+
   def process_import_file
     if import_file.present? and not already_processed?
       importer = KshemaImporter.new(self)
@@ -20,6 +31,12 @@ class Import < ActiveRecord::Base
     end
   end
     
+  def rollback
+    contacts_module = self.import_modules.select{|im| im.type == 'ContactsImportModule' }.first
+    if contacts_module and contacts_module.rollback
+      self.destroy
+    end
+  end
   
   # If status is finished or failed there's no turning back
   # If at least one has failed the overall status is failed

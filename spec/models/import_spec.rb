@@ -20,6 +20,39 @@ describe Import do
     end
   end
 
+  describe "#can_rollback?" do
+    describe "if ContactsModuleImport finished with failed rows" do
+      before do
+        cim.update_attribute :status, 'failed' 
+      end
+      describe "and no other modules started" do
+        it "returns true" do
+          import.can_rollback?.should be_true
+        end
+      end
+      describe "and other modules already started" do
+        before do
+          tsi.update_attribute :status, 'working'
+        end
+        it "returns false" do
+          import.can_rollback?.should be_false
+        end
+      end
+    end
+    describe "if ContactsModuleImport finished successfully" do
+      before do
+        cim.update_attribute :status, 'finished'
+      end
+      it "return false" do
+        import.can_rollback?.should be_false
+      end
+    end
+    describe "if ContactsModuleImport hasnt started" do
+      it "returns false" do
+        import.can_rollback?.should be_false
+      end
+    end
+  end
 
   describe "#finished?" do
     it "has finished if all importers related to it had finished" do
