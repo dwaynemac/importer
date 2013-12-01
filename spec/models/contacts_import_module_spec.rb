@@ -12,7 +12,7 @@ describe ContactsImportModule do
     describe "if remote rollback is successfull" do
       before do
         import_module
-        RestClient.should_receive(:delete).and_return mock(code: 200)
+        RestClient.should_receive(:delete).and_return double(code: 200)
       end
       it "destroys it self" do
         id = import_module.id
@@ -23,7 +23,7 @@ describe ContactsImportModule do
     describe "if remote rollback fails" do
       before do
         import_module
-        RestClient.should_receive(:delete).and_return mock(code: 400)
+        RestClient.should_receive(:delete).and_return double(code: 400)
       end
       it "doesn't destroy it self" do
         id = import_module.id
