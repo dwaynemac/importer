@@ -2,7 +2,12 @@
 <h3>Import History</h3>
 <ul>
   <% @imports.each do |import| %>
-      <li><%= link_to "Import from #{import.created_at}", import %></li>
+    <li>
+      <%= link_to "Import from #{import.created_at}", import %>
+      <% if import.can_rollback? -%>
+        <%= link_to 'rollback', import, method: :delete, confirm: 'this will erase data, cant go back' %>
+      <% end -%>
+    </li>
   <% end %>
 </ul>
 <% end %>
