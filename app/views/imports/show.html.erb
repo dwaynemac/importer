@@ -11,7 +11,16 @@
 <h5>Overall status: <span class="label label-default overall-status"><%= @import.status %></span></h5>
 <ul>
   <% @import.import_modules.each do |im| %>
-  <li><%= im.name %> <span class="label label-default"><%= im.status %></span></li>
+  <li>
+    <%= im.name %> <span class="label label-default"><%= im.status %></span>
+    <% if im.status == 'pending' %>
+        There are failed rows! Do you want to continue?
+        <%= link_to "Yes", import_path(id: @import.id, continue: true, import_module_id: im.id) %>
+        <%= link_to "No", import_path(id: @import.id, continue: false, import_module_id: im.id) %>
+    <% elsif im.status == 'failed' and im.failed_rows %>
+        <%= link_to "Failed Rows CSV", controller: :import_modules, action: :failed_rows, format: :csv, id: im.id %>
+    <% end %>
+  </li>
   <% end %>
 </ul>
 
