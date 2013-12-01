@@ -10,6 +10,17 @@ describe Import do
     tsi
   end
 
+  describe "#destroy" do
+    it "destroys all import_modules too" do
+      ImportModule.exists?(id: cim.id).should be_true
+      ImportModule.exists?(id: tsi.id).should be_true
+      import.destroy
+      ImportModule.exists?(id: cim.id).should be_false
+      ImportModule.exists?(id: tsi.id).should be_false
+    end
+  end
+
+
   describe "#finished?" do
     it "has finished if all importers related to it had finished" do
       ContactsImportModule.any_instance.stub(:finished?).and_return(true)

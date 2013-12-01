@@ -5,7 +5,7 @@ class Import < ActiveRecord::Base
 
   attr_accessible :import_file, :status
 
-  has_many :import_modules
+  has_many :import_modules, dependent: :destroy
 
   after_save :process_import_file
 
