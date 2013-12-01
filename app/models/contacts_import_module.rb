@@ -35,19 +35,28 @@ class ContactsImportModule < ImportModule
     end
   end
 
-
   # destroys import on remote module and then destroys self
   def rollback
-    response = RestClient.delete resource_uri, app_key: Contacts::API_KEY
-    if response.code == 200
-      self.destroy
-    else
-      return false
+    if self.failed? && !self.rollbacked?
+      response = RestClient.delete resource_uri, app_key: Contacts::API_KEY
+      if response.code == 200
+        self.update_attribute(:status, 'rollbacked')
+      else
+        return false
+      end
     end
   end
   
   def finished?
     self.realtime_status == 'finished'
+  end
+
+  def failed?
+    self.realtime_status == 'failed'
+  end
+
+  def rollbacked?
+    self.realtime_status == 'rollbacked'
   end
 
   #ContactImportModule (ContactImporter) is always ready
@@ -60,7 +69,7 @@ class ContactsImportModule < ImportModule
   end
 
   def realtime_status
-    if self.status_url.nil? || self.status == 'finished' || self.status == 'failed'
+    if self.status_url.nil? || self.status == 'finished' || self.status == 'failed' || self.status == 'rollbacked'
       return self.status
     end
     
