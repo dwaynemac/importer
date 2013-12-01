@@ -6,29 +6,37 @@ describe ContactsImportModule do
     ImportModule.delete_all
   end
 
-  let(:import_module){create(:contacts_import_module)}
+  let(:im){create(:contacts_import_module)}
 
   describe "#rollback" do
-    describe "if remote rollback is successfull" do
-      before do
-        import_module
-        RestClient.should_receive(:delete).and_return double(code: 200)
+    describe "if module failed" do
+      before { im.update_attribute :status, 'failed' }
+      describe "and has not been rollbacked" do
+        it "delegates rollback" do
+          RestClient.should_receive(:delete).and_return double code: 200
+          im.rollback
+        end
+        it "sets status to rollbacked if remote is successfull" do
+          RestClient.stub(:delete).and_return double code: 200
+          im.rollback
+        end
+        it "doesnt changes status if remote fails" do
+          RestClient.stub(:delete).and_return double code: 400
+          im.rollback
+        end
       end
-      it "destroys it self" do
-        id = import_module.id
-        import_module.rollback
-        ImportModule.exists?(id: id).should be_false
+      describe "and has been rollbacked" do
+        before { im.update_attribute :status, 'rollbacked' }
+        it "won't rollback again" do
+          RestClient.should_not_receive :delete
+          im.rollback
+        end
       end
     end
-    describe "if remote rollback fails" do
-      before do
-        import_module
-        RestClient.should_receive(:delete).and_return double(code: 400)
-      end
-      it "doesn't destroy it self" do
-        id = import_module.id
-        import_module.rollback
-        ImportModule.exists?(id: id).should be_true
+    describe "if modules finished" do
+      it "won't rollback again" do
+        RestClient.should_not_receive :delete
+        im.rollback
       end
     end
   end

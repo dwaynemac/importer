@@ -57,39 +57,18 @@ describe ImportsController do
   end
 
   describe "GET show" do
-    let(:import){create(:import, account: @user.current_account)}
+    let(:import){create(:import, account: @user.current_account, status: 'ready')}
     let(:cim) {create(:import_module, import: import) }
 
     it "assigns the requested import as @import" do
       get :show, {id: import.to_param}
       assigns(:import).should eq(import)
     end
-    it "calls realtime_status on each import_module of this import" do
-      create(:import_module, import: import, status_url: 'import/as', status: 'working')
-      ImportModule.any_instance.should_receive(:realtime_status).and_return true
-      get :show, {id: import.id}
-    end
-    it "wont call realtime_status on other import import_modules" do 
-      other_import = create(:import)
-      create(:import_module, import: other_import, status_url: 'other_import/as', status: 'working')
-      ImportModule.any_instance.should_not_receive :realtime_status
-      get :show, {id: import.id}
-    end
     
     describe "failed rows" do
       it "should not update status if continue y empty" do
         get :show, {id: import.id}
         cim.should_not_receive :update_attribute
-      end
-      it "should update status to finished if continue is true" do
-        get :show, {id: import.id, continue: true, import_module_id: cim.id}
-        cim.reload
-        cim.status.should == 'finished'
-      end
-      it "should update status to failed if continue is false" do
-        get :show, {id: import.id, continue: false, import_module_id: cim.id}
-        cim.reload
-        cim.status.should == 'failed'
       end
     end
     
