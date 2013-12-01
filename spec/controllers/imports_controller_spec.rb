@@ -19,6 +19,7 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe ImportsController do
+  render_views
 
   before do
     Import.destroy_all
@@ -202,6 +203,32 @@ describe ImportsController do
       import = create(:import, :account => @user.current_account)
       delete :destroy, {:id => import.to_param}
       response.should redirect_to(imports_url)
+    end
+  end
+
+  describe "DELETE rollback" do
+    let(:import){create(:import, :account => @user.current_account)}
+    describe "if import failed in contacts_module" do
+      before do
+        create(:contacts_import_module, import: import, status: 'failed')
+        ContactsImportModule.any_instance.stub(:rollback).and_return true
+      end
+
+      it "delegates rollback to imported modules" do
+        Import.any_instance.should_receive :rollback
+        delete :rollback, id: import.id
+      end
+
+      it "destroys the requested import" do
+        expect {
+          delete :rollback, {:id => import.id}
+        }.to change(Import, :count).by(-1)
+      end
+
+      it "redirect to the imports list" do
+        delete :rollback, {:id => import.id}
+        response.should redirect_to(imports_url)
+      end
     end
   end
 

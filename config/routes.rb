@@ -5,7 +5,11 @@ Importer::Application.routes.draw do
     post '/logout', to: "devise/cas_sessions#destroy"
   end
 
-  resources :imports
+  resources :imports do
+    member do
+      delete :rollback
+    end
+  end
   resources :import_modules do
     member do
       get :failed_rows

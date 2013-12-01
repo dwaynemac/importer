@@ -1,5 +1,5 @@
 class ImportsController < UserApplicationController
-  before_action :set_import, only: [:show, :edit, :update, :destroy]
+  before_action :set_import, only: [:show, :edit, :update, :destroy, :rollback]
 
   # GET /imports
   # GET /imports.json
@@ -58,6 +58,19 @@ class ImportsController < UserApplicationController
     respond_to do |format|
       format.html { redirect_to imports_url }
       format.json { head :no_content }
+    end
+  end
+
+  # DELETE /imports/1/rollback
+  def rollback
+    if @import.can_rollback? and @import.rollback
+      respond_to do |format|
+        format.html { redirect_to imports_url }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to imports_url, error: 'couldnt rollback' }
+      end
     end
   end
 
