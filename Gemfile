@@ -2,10 +2,10 @@ source 'https://rubygems.org'
 
 ruby '2.0.0'
 
-gem 'rails', '4.0.0'
+gem 'rails', '4.0.2'
 
 gem 'cancan'
-gem 'protected_attributes' # Rails 4 support for Mass Assignment Security
+gem 'protected_attributes', '~> 1.0.5' # Rails 4 support for Mass Assignment Security
 gem 'devise', '~> 3.1'
 gem 'devise_cas_authenticatable'
 gem 'carrierwave'
