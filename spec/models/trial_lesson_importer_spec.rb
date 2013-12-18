@@ -27,6 +27,9 @@ describe TrialLessonImporter do
       it "shouldn't be ready" do
         trial_li.ready?.should == false
       end
+      it "should be waiting" do
+        trial_li.realtime_status.should == 'waiting'
+      end
     end
 
   end

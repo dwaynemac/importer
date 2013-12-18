@@ -27,6 +27,9 @@ describe TimeSlotImporter do
       it "shouldn't be ready" do
         tsi.ready?.should == false
       end
+      it "should be waiting" do
+        tsi.realtime_status.should == 'waiting'
+      end
     end
 
   end

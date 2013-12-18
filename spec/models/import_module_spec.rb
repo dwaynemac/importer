@@ -10,7 +10,11 @@ describe ImportModule do
 
   describe "#realtime_status" do
     describe "if status_url is nil" do
-      it "returns ready" do
+      it "returns waiting" do
+        import_module.realtime_status.should == 'waiting'
+      end
+      it "returns ready if ready?" do
+        ImportModule.any_instance.stub(:ready?).and_return(true)
         import_module.realtime_status.should == 'ready'
       end
     end

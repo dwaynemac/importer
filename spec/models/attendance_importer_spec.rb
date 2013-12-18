@@ -27,6 +27,9 @@ describe AttendanceImporter do
       it "shouldn't be ready" do
         ai.ready?.should == false
       end
+      it "should be waiting" do
+        ai.realtime_status.should == 'waiting'
+      end
     end
 
   end
