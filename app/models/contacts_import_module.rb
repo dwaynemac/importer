@@ -2,7 +2,7 @@ class ContactsImportModule < ImportModule
 
   # @return [Hash] params that should be sent to status_url
   def status_params
-    {:app_key => Contacts::API_KEY, 'import[account_name]' => import.account.name}
+    { app_key: Contacts::API_KEY, account_name: import.account.name }
   end
  
   def delegate_import
@@ -19,8 +19,8 @@ class ContactsImportModule < ImportModule
     # Send file to contacts module using import api
     response = RestClient.post Contacts::HOST + '/v0/imports',
                     :app_key => Contacts::API_KEY,
+                    :account_name => self.import.account.name,
                     :import => {
-                      :account_name => self.import.account.name,
                       :file => contacts_csv,
                       :headers => %w(id dni nombres apellidos dire tel cel mail grado_id instructor_id coeficiente_id genero foto
                         fecha_nacimiento inicio_practicas profesion	notes follow indice_fidelizacion codigo_postal school_id

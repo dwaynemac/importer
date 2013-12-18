@@ -24,9 +24,9 @@ class TimeSlotImporter < ImportModule
     # The last two headers are: vacancy (it doesn't matter) and school_id (already imported)
     response = RestClient.post  Attendance::HOST + '/api/v0/imports',
                                 app_key: Attendance::API_KEY,
+                                account_name: self.import.account.name,
                                 import: {
                                   object: 'TimeSlot',
-                                  account_name: self.import.account.name,
                                   csv_file: csv,
                                   headers: [
                                     'external_id',
