@@ -20,9 +20,9 @@ class AttendanceImporter < ImportModule
     # first header: external id, fifth and sixth headers: created at, updated at
     response = RestClient.post  Attendance::HOST + '/api/v0/imports',
                                 app_key: Attendance::API_KEY,
+                                account_name: self.import.account.name,
                                 import: {
                                   object: 'Attendance',
-                                  account_name: self.import.account.name,
                                   csv_file: csv,
                                   headers: [
                                     '',
