@@ -55,7 +55,7 @@ class Import < ActiveRecord::Base
       update_attribute(:status, 'finished')
     elsif import_modules.load.select{ |im| im.status == 'pending' }.count > 0
       update_attribute(:status, 'pending')
-    elsif import_modules.load.select{ |im| im.status != 'ready' }.count > 0 and status != 'working'
+    elsif import_modules.load.select{ |im| im.status != 'ready' && im.status != 'waiting' }.count > 0 and status != 'working'
       update_attribute(:status, 'working')
     end
     status

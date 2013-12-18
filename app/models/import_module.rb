@@ -56,8 +56,13 @@ class ImportModule < ActiveRecord::Base
   end
 
   def realtime_status
-    return self.status if status_url.nil?
-    unless self.status == 'finished'
+    if self.status_url.nil?
+      if self.ready? && self.status != 'ready'
+        self.update_attributes(:status, 'ready')
+      elsif self.status != 'waiting'
+        self.update_attribute(:status, 'waiting')
+      end
+    elsif self.status != 'finished'
       response = RestClient.get status_url, :params => status_params
       self.update_attributes(status: parse_status(response))
     end
