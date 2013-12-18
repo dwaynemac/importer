@@ -69,7 +69,9 @@ describe Import do
 
   describe "#realtime_status" do
     it "should make a query if it has not finished" do
-      ContactsImportModule.any_instance.should_receive(:finished?).once
+      ContactsImportModule.stub(:finished?) #this could be any class method of any class it's a hack
+      ContactsImportModule.any_instance.stub(:finished?) { |*args| ContactsImportModule.finished?(*args) }
+      ContactsImportModule.should_receive(:finished?).at_least(:once)
       import.realtime_status
     end
     it "shouldn't make a query if it has finished" do
