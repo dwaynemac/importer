@@ -57,9 +57,9 @@ class ImportModule < ActiveRecord::Base
 
   def realtime_status
     if self.status_url.nil?
-      if self.ready? && self.status != 'ready'
+      if self.status != 'ready' && self.ready?
         self.update_attribute(:status, 'ready')
-      elsif self.status != 'waiting'
+      elsif self.status != 'waiting' && !self.ready?
         self.update_attribute(:status, 'waiting')
       end
     elsif self.status != 'finished'
