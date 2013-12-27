@@ -17,6 +17,8 @@ gem 'figaro'
 
 gem 'zip'
 
+gem 'i18n', '~> 0.6.6'
+
 group :development do
   gem 'git-pivotal-tracker-integration'
 

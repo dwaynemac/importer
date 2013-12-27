@@ -294,6 +294,7 @@ DEPENDENCIES
   fog
   foreman
   git-pivotal-tracker-integration
+  i18n (~> 0.6.6)
   jbuilder (~> 1.2)
   jquery-rails
   pg
