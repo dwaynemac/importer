@@ -55,7 +55,7 @@ class ImportModule < ActiveRecord::Base
     end
   end
 
-  def realtime_status
+  def realtime_status (prefetched_response=nil)
     if self.status_url.nil?
       if self.status != 'ready' && self.ready?
         self.update_attribute(:status, 'ready')
@@ -63,7 +63,11 @@ class ImportModule < ActiveRecord::Base
         self.update_attribute(:status, 'waiting')
       end
     elsif self.status != 'finished'
-      response = RestClient.get status_url, :params => status_params
+      if prefetched_response.nil?
+        response = RestClient.get status_url, :params => status_params
+      else
+        response = prefetched_response
+      end
       self.update_attributes(status: parse_status(response))
     end
     self.status

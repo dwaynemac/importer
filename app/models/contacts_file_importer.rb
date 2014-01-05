@@ -1,15 +1,13 @@
 class ContactsFileImporter < ImportModule
 
-  # @return [Hash] params that should be sent to status_url
   def status_params
     { app_key: Kshema::API_KEY }
   end
  
   def delegate_import
-    response = RestClient.post Kshema::HOST + 'api/v1/files_export',
-                    app_key: Kshema::API_KEY,
-                    account_name: self.import.account.name,
-                    school_id: self.get_school_id 
+    response = RestClient.post  Kshema::HOST + 'api/v1/files_export',
+                                app_key: Kshema::API_KEY,
+                                account_name: self.import.account.name
 
     if(response.code == 201)
       remote_import_id = JSON.parse(response)['id']
@@ -34,20 +32,20 @@ class ContactsFileImporter < ImportModule
   end
 
   def realtime_status
-    if self.status_url.nil? || self.status == 'finished' || self.status == 'failed'
+    if self.status == 'finished' || self.status == 'failed'
       return self.status
     end
     
-    json = JSON.parse(RestClient.get status_url, :params => status_params)
-    self.update_attribute(:status, json['status'])
-
-    self.status
+    response = RestClient.get status_url, :params => status_params
+    if parse_status(response) == 'failed'
+      self.update_attribute(:status, 'pending')
+    else
+      super(response)
+    end
   end
 
-  private
-  
-  def get_school_id
-    #TODO  
+  def parse_status (response)
+    JSON.parse(response)['status']
   end
 
 end
