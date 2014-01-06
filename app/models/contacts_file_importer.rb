@@ -1,17 +1,17 @@
 class ContactsFileImporter < ImportModule
 
   def status_params
-    { app_key: Kshema::API_KEY }
+    { key: Kshema::API_KEY }
   end
  
   def delegate_import
-    response = RestClient.post  Kshema::HOST + 'api/v1/files_export',
-                                app_key: Kshema::API_KEY,
+    response = RestClient.post  Kshema::HOST + '/pws/v1/files_export',
+                                key: Kshema::API_KEY,
                                 account_name: self.import.account.name
 
     if(response.code == 201)
       remote_import_id = JSON.parse(response)['id']
-      self.update_attributes(status_url: Kshema::HOST + 'api/v1/files_export/' + remote_import_id)
+      self.update_attributes(status_url: Kshema::HOST + '/pws/v1/files_export/' + remote_import_id)
     end
   end
   
