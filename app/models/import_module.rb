@@ -34,7 +34,7 @@ class ImportModule < ActiveRecord::Base
   end
 
   # override in child class
-  def parse_status
+  def map_status
   end
   
   # override in child class
@@ -55,7 +55,7 @@ class ImportModule < ActiveRecord::Base
     end
   end
 
-  def realtime_status (prefetched_response=nil)
+  def realtime_status
     if self.status_url.nil?
       if self.status != 'ready' && self.ready?
         self.update_attribute(:status, 'ready')
@@ -63,12 +63,7 @@ class ImportModule < ActiveRecord::Base
         self.update_attribute(:status, 'waiting')
       end
     elsif self.status != 'finished'
-      if prefetched_response.nil?
-        response = RestClient.get status_url, :params => status_params
-      else
-        response = prefetched_response
-      end
-      self.update_attributes(status: parse_status(response))
+      self.update_attributes(status: map_status(RestClient.get status_url, :params => status_params))
     end
     self.status
   end

@@ -31,21 +31,13 @@ class ContactsFileImporter < ImportModule
     "Contacts files"
   end
 
-  def realtime_status
-    if self.status == 'finished' || self.status == 'failed'
-      return self.status
-    end
-    
-    response = RestClient.get status_url, :params => status_params
-    if parse_status(response) == 'failed'
-      self.update_attribute(:status, 'pending')
+  def map_status (response)
+    new_status = JSON.parse(response)['status']
+    if new_status == 'failed'
+      'pending'
     else
-      super(response)
+      new_status
     end
-  end
-
-  def parse_status (response)
-    JSON.parse(response)['status']
   end
 
 end
