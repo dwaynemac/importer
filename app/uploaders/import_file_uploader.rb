@@ -38,7 +38,7 @@ class ImportFileUploader < CarrierWave::Uploader::Base
   version :products do
     process :extract_file => :productos
     def full_filename (for_file = model.import_file.file)
-      "productos.csv"
+      "products.csv"
     end
   end
 
