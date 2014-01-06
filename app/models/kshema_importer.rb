@@ -10,6 +10,8 @@ class KshemaImporter
     
     proccess_attendance_imports
 
+    process_fnz_imports
+
     # delegations will be done on background
   end
 
@@ -19,6 +21,13 @@ class KshemaImporter
     TimeSlotImporter.create(import: @import)
     AttendanceImporter.create(import: @import)
     TrialLessonImporter.create(import: @import)
+  end
+
+  def process_fnz_imports
+    ProductImporter.create(import: @import)
+    #SaleImporter.create(import: @import)
+    #MembershipImporter.create(import: @import)
+    #InstallmentImporter.create(import: @import)
   end
 
 end

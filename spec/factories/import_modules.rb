@@ -21,4 +21,8 @@ FactoryGirl.define do
     name "triallessonimporter"
     import
   end
+  factory :product_importer do
+    name "productimporter"
+    import
+  end
 end

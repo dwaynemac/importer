@@ -6,6 +6,17 @@ module Contacts
   API_KEY = ENV['contacts_key']
 end
 
+module Fnz
+  API_KEY = ENV['fnz_key']
+  if Rails.env.development?
+    HOST = "localhost:3008"
+  elsif Rails.env.production?
+    HOST = "fnz.herokuapp.com"
+  elsif Rails.env.test?
+    HOST = "test"
+  end
+end
+
 module Attendance
   API_KEY = ENV['attendance_key']
   if Rails.env.development?
