@@ -21,4 +21,8 @@ FactoryGirl.define do
     name "triallessonimporter"
     import
   end
+  factory :contacts_file_importer do
+    name "contactsfileimporter"
+    import
+  end
 end

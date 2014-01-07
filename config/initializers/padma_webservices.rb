@@ -12,6 +12,8 @@ module Kshema
     HOST = "metododerose.org/kshema"
   elsif Rails.env.development?
     HOST = "xxx"
+  elsif Rails.env.test?
+    HOST = "test"
   end
 end
 
