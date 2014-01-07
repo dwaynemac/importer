@@ -21,7 +21,7 @@ class SaleImporter < ImportModule
                                 app_key: Fnz::API_KEY,
                                 padma_id: self.import.account.name,
                                 import: {
-                                    object: 'Product',
+                                    object: 'Sale',
                                     upload: csv
                                 }
     if response.code == 201
