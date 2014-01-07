@@ -17,7 +17,6 @@ class KshemaImporter
   private
 
   def proccess_attendance_imports
-    ContactsFileImporter.create(import: @import)
     TimeSlotImporter.create(import: @import)
     AttendanceImporter.create(import: @import)
     TrialLessonImporter.create(import: @import)
