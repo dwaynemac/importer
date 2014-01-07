@@ -2,14 +2,14 @@ class ProductImporter < ImportModule
 
   # @return [Hash] params that should be sent to status_url
   def status_params
-    {:app_key => Attendance::API_KEY}
+    {:app_key => Fnz::API_KEY}
   end
 
   def parse_status (response)
     JSON.parse(response)['status']
   end
   
-  # Import time_slots csv to attendance
+  # Import products csv to fnz
   def delegate_import
     if Rails.env == 'development'
       # use local file path on development
@@ -20,8 +20,7 @@ class ProductImporter < ImportModule
     end
 
 
-    # Send file to attendance module using import api
-    # The last two headers are: vacancy (it doesn't matter) and school_id (already imported)
+    # Send file to fnz module using import api
     response = RestClient.post  Fnz::HOST + '/api/v0/imports',
                                 app_key: Fnz::API_KEY,
                                 padma_id: self.import.account.name,
@@ -30,7 +29,7 @@ class ProductImporter < ImportModule
                                   upload: csv
                                 }
     if response.code == 201
-      # If import was created successfully create a time_slot importer
+      # If import was created successfully create a product importer
       #that will show the status of this import
       remote_import_id = JSON.parse(response.body)['id']
       self.update_attributes(status_url: Fnz::HOST + '/api/v0/imports/' + remote_import_id.to_s)
@@ -41,6 +40,7 @@ class ProductImporter < ImportModule
     self.realtime_status == 'finished'
   end
 
+  # Start migrating inmediatly
   def ready?
     true
   end
