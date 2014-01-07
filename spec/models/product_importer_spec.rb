@@ -15,7 +15,7 @@ describe ProductImporter do
       before do
         ContactsImportModule.any_instance.stub(:finished?) {false}
       end
-      it "shouldn't be ready" do
+      it "should be ready" do
         pi.ready?.should == true
       end
     end
