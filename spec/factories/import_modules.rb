@@ -25,4 +25,8 @@ FactoryGirl.define do
     name "productimporter"
     import
   end
+  factory :sale_importer do
+    name "saleimporter"
+    import
+  end
 end

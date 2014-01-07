@@ -42,6 +42,14 @@ class ImportFileUploader < CarrierWave::Uploader::Base
     end
   end
 
+  version :sales do
+    process :extract_file => :ventas
+    def full_filename (for_file = model.import_file.file)
+      "sales.csv"
+    end
+  end
+
+
   def extract_file(filename)
     file = nil
     Zip::ZipFile.open(current_path) do |zip_file|

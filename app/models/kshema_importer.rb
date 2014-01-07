@@ -24,8 +24,10 @@ class KshemaImporter
   end
 
   def process_fnz_imports
+    # FNZ need the agents use instructors csv
+
     ProductImporter.create(import: @import)
-    #SaleImporter.create(import: @import)
+    SaleImporter.create(import: @import)
     #MembershipImporter.create(import: @import)
     #InstallmentImporter.create(import: @import)
   end
