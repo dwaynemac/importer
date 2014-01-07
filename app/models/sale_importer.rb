@@ -43,7 +43,7 @@ class SaleImporter < ImportModule
   end
 
   def my_name
-    "Trial Lessons"
+    "Sales"
   end
 
 end
