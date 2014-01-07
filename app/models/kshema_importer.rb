@@ -29,7 +29,7 @@ class KshemaImporter
     ProductImporter.create(import: @import)
     SaleImporter.create(import: @import)
     MembershipImporter.create(import: @import)
-    #InstallmentImporter.create(import: @import)
+    InstallmentImporter.create(import: @import)
   end
 
 end

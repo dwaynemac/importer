@@ -56,6 +56,13 @@ class ImportFileUploader < CarrierWave::Uploader::Base
     end
   end
 
+  version :installments do
+    process :extract_file => :tickets
+    def full_filename (for_file = model.import_file.file)
+      "installments.csv"
+    end
+  end
+
 
   def extract_file(filename)
     file = nil

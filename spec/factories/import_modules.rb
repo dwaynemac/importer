@@ -33,4 +33,8 @@ FactoryGirl.define do
     name "membershipimporter"
     import
   end
+  factory :installment_importer do
+    name "installmentimporter"
+    import
+  end
 end
