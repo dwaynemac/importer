@@ -21,13 +21,13 @@ class ImportModulesController < ApplicationController
     im = ImportModule.find params[:id]
     failed_contacts_response = RestClient.get "#{im.status_url}/failed_contacts",
                                               params: im.status_params
-    
-    failed_contacts_ids = JSON.parse(failed_contacts_response)["failed_contacts"]
+    fcr_json = JSON.parse(failed_contacts_response) 
 
     response = RestClient.post  Kshema::HOST + '/pws/v1/files_export',
                                 key: Kshema::API_KEY,
                                 account_name: im.import.account.name,
-                                contacts_ids: failed_contacts_ids
+                                contacts_ids: fcr_json["failed_contacts"],
+                                timeout: fcr_json["suggested_timeout"]
     if response.code == 201
       im.update_attributes(status_url: Kshema::HOST + '/pws/v1/files_export/' + JSON.parse(response)['id'].to_s)
     end
