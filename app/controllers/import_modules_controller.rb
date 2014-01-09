@@ -40,7 +40,7 @@ class ImportModulesController < ApplicationController
   private
 
   def import_module_params
-    params.require( :import_module ).permit(:ignore_failed_rows)
+    params.require( :import_module ).permit(:ignore_failed_rows, :status)
   end
 
 end
