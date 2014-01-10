@@ -37,7 +37,6 @@ class ImportModule < ActiveRecord::Base
   def map_status
   end
   
-  # override in child class
   def finished?
     self.realtime_status == 'finished'
   end
