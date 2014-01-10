@@ -46,14 +46,6 @@ class ContactsImportModule < ImportModule
       end
     end
   end
-  
-  def finished?
-    self.realtime_status == 'finished'
-  end
-
-  def failed?
-    self.realtime_status == 'failed'
-  end
 
   def rollbacked?
     self.realtime_status == 'rollbacked'

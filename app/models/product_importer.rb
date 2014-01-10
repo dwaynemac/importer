@@ -36,10 +36,6 @@ class ProductImporter < ImportModule
     end
   end
 
-  def finished?
-    self.realtime_status == 'finished'
-  end
-
   # Start migrating inmediatly
   def ready?
     true

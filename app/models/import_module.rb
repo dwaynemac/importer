@@ -39,6 +39,11 @@ class ImportModule < ActiveRecord::Base
   
   # override in child class
   def finished?
+    self.realtime_status == 'finished'
+  end
+
+  def failed?
+    self.realtime_status == 'failed'
   end
 
   # override in child class

@@ -31,10 +31,6 @@ class InstallmentImporter < ImportModule
       self.update_attributes(status_url: Fnz::HOST + '/api/v0/imports/' + remote_import_id.to_s)
     end
   end
-  
-  def finished?
-    self.realtime_status == 'finished'
-  end
 
   # Wait for products and contacts import to finish
   def ready?
