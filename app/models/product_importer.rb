@@ -5,7 +5,7 @@ class ProductImporter < ImportModule
     {:app_key => Fnz::API_KEY}
   end
 
-  def parse_status (response)
+  def map_status (response)
     JSON.parse(response)['status']
   end
   
