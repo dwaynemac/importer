@@ -37,4 +37,8 @@ FactoryGirl.define do
     name "installmentimporter"
     import
   end
+  factory :contacts_file_importer do
+    name "contactsfileimporter"
+    import
+  end
 end

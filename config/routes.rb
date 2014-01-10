@@ -13,6 +13,7 @@ Importer::Application.routes.draw do
   resources :import_modules do
     member do
       get :failed_rows
+      get :failed_files
     end
   end
   root to: 'imports#index'

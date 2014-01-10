@@ -8,6 +8,7 @@ class KshemaImporter
   def process
     cim = ContactsImportModule.create(import: @import)
     
+    proccess_contacts_files
     proccess_attendance_imports
 
     process_fnz_imports
@@ -30,6 +31,10 @@ class KshemaImporter
     SaleImporter.create(import: @import)
     MembershipImporter.create(import: @import)
     InstallmentImporter.create(import: @import)
+  end
+
+  def proccess_contacts_files
+    ContactsFileImporter.create(import: @import)
   end
 
 end

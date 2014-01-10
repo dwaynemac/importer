@@ -34,7 +34,7 @@ class ImportModule < ActiveRecord::Base
   end
 
   # override in child class
-  def parse_status
+  def map_status
   end
   
   # override in child class
@@ -63,8 +63,7 @@ class ImportModule < ActiveRecord::Base
         self.update_attribute(:status, 'waiting')
       end
     elsif self.status != 'finished'
-      response = RestClient.get status_url, :params => status_params
-      self.update_attributes(status: parse_status(response))
+      self.update_attributes(status: map_status(RestClient.get status_url, :params => status_params))
     end
     self.status
   end
