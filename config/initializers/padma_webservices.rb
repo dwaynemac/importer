@@ -11,7 +11,7 @@ module Kshema
   if Rails.env.production?
     HOST = "metododerose.org/kshema"
   elsif Rails.env.development?
-    HOST = "xxx"
+    HOST = "localhost:3000"
   elsif Rails.env.test?
     HOST = "test"
   end
@@ -27,3 +27,5 @@ module Attendance
     HOST = "test"
   end
 end
+
+LogicalModel.retries = 1
