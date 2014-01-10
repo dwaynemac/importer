@@ -62,7 +62,7 @@ class ImportModule < ActiveRecord::Base
       elsif self.status != 'waiting' && !self.ready?
         self.update_attribute(:status, 'waiting')
       end
-    elsif self.status != 'finished'
+    elsif self.status != 'finished' && self.status != 'failed' && self.status != 'rolledback'
       self.update_attributes(status: map_status(RestClient.get status_url, :params => status_params))
     end
     self.status
