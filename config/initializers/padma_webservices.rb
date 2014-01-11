@@ -38,3 +38,15 @@ module Attendance
     HOST = "test"
   end
 end
+
+module Crm
+  API_KEY = ENV['crm_key']
+  if Rails.env.development?
+    HOST = "localhost:3000"
+  elsif Rails.env.production?
+    HOST = "crm.padm.am"
+  elsif Rails.env.test?
+    HOST = "test"
+  end
+end
+
