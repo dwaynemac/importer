@@ -41,4 +41,8 @@ FactoryGirl.define do
     name "contactsfileimporter"
     import
   end
+  factory :comment_importer do
+    name "commentimporter"
+    import
+  end
 end
