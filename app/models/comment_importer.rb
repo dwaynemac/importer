@@ -1,10 +1,10 @@
 class CommentImporter < CrmImporter
   def file_path
-    import.import_file.contacts.path
+    import.import_file.comments.path
   end
 
   def file_url
-    import.import_file.contacts.url
+    import.import_file.comments.url
   end
 
   def request_import (csv)

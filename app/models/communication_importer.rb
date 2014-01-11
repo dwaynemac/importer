@@ -1,10 +1,10 @@
 class CommunicationImporter < CrmImporter
   def file_path
-    import.import_file.contacts.path
+    import.import_file.communications.path
   end
 
   def file_url
-    import.import_file.contacts.url
+    import.import_file.communications.url
   end
 
   def request_import (csv)
