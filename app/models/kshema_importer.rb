@@ -35,6 +35,7 @@ class KshemaImporter
 
   def proccess_crm_imports
     CommentImporter.create(import: @import)
+    CommunicationImporter.create(import: @import)
   end
 
 end

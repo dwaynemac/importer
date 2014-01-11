@@ -45,4 +45,8 @@ FactoryGirl.define do
     name "commentimporter"
     import
   end
+  factory :communication_importer do
+    name "communicationimporter"
+    import
+  end
 end
