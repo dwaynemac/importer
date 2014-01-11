@@ -25,8 +25,8 @@ class CrmImporter < ImportModule
 
     response = request_import csv
     if response.code == 201
-      remote_import_id = JSON.parse(response)['id']
-      self.update_attributes(status_url: Crm::HOST + '/v0/imports/' + remote_import_id)
+      remote_import_id = JSON.parse(response.body)['id']
+      self.update_attributes(status_url: Crm::HOST + '/v0/imports/' + remote_import_id.to_s)
     end
   end
 
