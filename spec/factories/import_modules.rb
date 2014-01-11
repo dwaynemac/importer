@@ -53,4 +53,8 @@ FactoryGirl.define do
     name "followimporter"
     import
   end
+  factory :enrollment_importer do
+    name "enrollmentimporter"
+    import
+  end
 end
