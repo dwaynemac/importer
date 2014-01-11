@@ -5,15 +5,11 @@ class KshemaImporter
     @import = import
   end
 
+  # delegations will be done on background
   def process
-    cim = ContactsImportModule.create(import: @import)
-    
-    proccess_contacts_files
+    proccess_contacts_imports
     proccess_attendance_imports
-
     process_fnz_imports
-
-    # delegations will be done on background
   end
 
   private
@@ -24,17 +20,21 @@ class KshemaImporter
     TrialLessonImporter.create(import: @import)
   end
 
+  # FNZ need the agents use instructors csv
   def process_fnz_imports
-    # FNZ need the agents use instructors csv
-
     ProductImporter.create(import: @import)
     SaleImporter.create(import: @import)
     MembershipImporter.create(import: @import)
     InstallmentImporter.create(import: @import)
   end
 
-  def proccess_contacts_files
+  def proccess_contacts_imports
+    ContactsImportModule.create(import: @import)
     ContactsFileImporter.create(import: @import)
+  end
+
+  def proccess_crm_imports
+    CommentImporter.create(import: @import)
   end
 
 end
