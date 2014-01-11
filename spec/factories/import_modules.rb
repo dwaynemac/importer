@@ -57,4 +57,8 @@ FactoryGirl.define do
     name "enrollmentimporter"
     import
   end
+  factory :dropout_importer do
+    name "dropoutimporter"
+    import
+  end
 end
