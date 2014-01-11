@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe TimeSlotImporter do
+describe CommentImporter do
 
-  let(:ci) { create(:time_slot_importer) }
+  let(:ci) { create(:comment_importer) }
   let(:cim) { create(:contacts_import_module, import: ci.import) }
 
   describe "#ready?" do
@@ -40,14 +40,14 @@ describe TimeSlotImporter do
       ci.stub_chain(:open, :read) {"x_file"} 
     end
 
-    describe "if attendances-ws responds ok" do
+    describe "if crm responds ok" do
       before do
         my_response = double("Response", code: 201, body: "{\"id\": \"1\"}")
         RestClient.stub(:post).and_return(my_response)
       end
       it "should set status_url" do
         ci.delegate_import()
-        ci.status_url.should == "test/api/v0/imports/1"
+        ci.status_url.should == "test/v0/imports/1"
       end
     end
 
