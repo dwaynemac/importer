@@ -14,7 +14,7 @@
   <li>
     <%= im.name %> <span class="label label-default"><%= im.status %></span>
     <% if im.status == 'pending' %>
-      <% if im.name == 'Contacts' %>
+      <% if im.handle_failed_rows? %>
         There are failed rows! Do you want to continue?
         <%= link_to "Yes", import_module_path(id: im.id, import_module: {ignore_failed_rows: 'true'}), method: :put %>
         <%= link_to "No", import_module_path(id: im.id, import_module: {ignore_failed_rows: 'false'}), method: :put %>

@@ -3,6 +3,10 @@ class CrmImporter < ImportModule
   def status_params
     { app_key: Crm::API_KEY, import: { account_name: import.account.name } }
   end
+
+  def handle_failed_rows?
+    true
+  end
   
   # override in child class
   def file_path

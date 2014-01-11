@@ -4,6 +4,10 @@ class ContactsImportModule < ImportModule
   def status_params
     { app_key: Contacts::API_KEY, account_name: import.account.name }
   end
+
+  def handle_failed_rows?
+    true
+  end
  
   def delegate_import
     # Import contacts csv to padma_contacts

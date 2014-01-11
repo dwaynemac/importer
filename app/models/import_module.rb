@@ -29,6 +29,11 @@ class ImportModule < ActiveRecord::Base
     end
   end
 
+  # override in child class if required
+  def handle_failed_rows?
+    false
+  end
+
   # override in child class
   def status_params
   end
