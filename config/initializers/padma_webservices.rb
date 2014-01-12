@@ -22,7 +22,7 @@ module Kshema
   if Rails.env.production?
     HOST = "metododerose.org/kshema"
   elsif Rails.env.development?
-    HOST = "xxx"
+    HOST = "localhost:4000"
   elsif Rails.env.test?
     HOST = "test"
   end
