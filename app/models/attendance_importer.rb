@@ -40,10 +40,6 @@ class AttendanceImporter < ImportModule
       self.update_attributes(status_url: Attendance::HOST + '/api/v0/imports/' + remote_import_id.to_s)
     end
   end
-  
-  def finished?
-    self.realtime_status == 'finished'
-  end
 
   def ready?
     self.import.import_modules.where(type: 'TimeSlotImporter').first.finished?

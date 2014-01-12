@@ -14,14 +14,6 @@ class ContactsFileImporter < ImportModule
       self.update_attributes(status_url: Kshema::HOST + '/pws/v1/files_export/' + remote_import_id.to_s)
     end
   end
-  
-  def finished?
-    self.realtime_status == 'finished'
-  end
-
-  def failed?
-    self.realtime_status == 'failed'
-  end
 
   def ready?
     self.import.import_modules.where(type: 'ContactsImportModule').first.finished?

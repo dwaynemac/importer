@@ -54,10 +54,6 @@ class TimeSlotImporter < ImportModule
     end
   end
 
-  def finished?
-    self.realtime_status == 'finished'
-  end
-
   def ready?
     self.import.import_modules.where(type: 'ContactsImportModule').first.finished?
   end

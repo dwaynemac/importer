@@ -10,7 +10,7 @@ describe ContactsImportModule do
 
   describe "#rollback" do
     describe "if module failed" do
-      before { im.update_attribute :status, 'failed' }
+      before { im.update_attributes(status: 'failed', status_url: 'xxx') }
       describe "and has not been rollbacked" do
         it "delegates rollback" do
           RestClient.should_receive(:delete).and_return double code: 200
@@ -26,7 +26,7 @@ describe ContactsImportModule do
         end
       end
       describe "and has been rollbacked" do
-        before { im.update_attribute :status, 'rollbacked' }
+        before { im.update_attributes(status: 'rolledback', status_url: 'xxx') }
         it "won't rollback again" do
           RestClient.should_not_receive :delete
           im.rollback

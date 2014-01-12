@@ -189,7 +189,7 @@ describe ImportsController do
     let(:import){create(:import, :account => @user.current_account)}
     describe "if import failed in contacts_module" do
       before do
-        create(:contacts_import_module, import: import, status: 'failed')
+        create(:contacts_import_module, import: import, status: 'failed', status_url: 'xxx')
         ContactsImportModule.any_instance.stub(:rollback).and_return true
       end
 

@@ -6,6 +6,17 @@ module Contacts
   API_KEY = ENV['contacts_key']
 end
 
+module Fnz
+  API_KEY = ENV['fnz_key']
+  if Rails.env.development?
+    HOST = "localhost:3008"
+  elsif Rails.env.production?
+    HOST = "fnz.herokuapp.com"
+  elsif Rails.env.test?
+    HOST = "test"
+  end
+end
+
 module Kshema
   API_KEY = ENV['kshema_key']
   if Rails.env.production?
@@ -28,4 +39,14 @@ module Attendance
   end
 end
 
-LogicalModel.retries = 1
+module Crm
+  API_KEY = ENV['crm_key']
+  if Rails.env.development?
+    HOST = "localhost:3000"
+  elsif Rails.env.production?
+    HOST = "crm.padm.am"
+  elsif Rails.env.test?
+    HOST = "test"
+  end
+end
+

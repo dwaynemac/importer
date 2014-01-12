@@ -21,8 +21,44 @@ FactoryGirl.define do
     name "triallessonimporter"
     import
   end
+  factory :product_importer do
+    name "productimporter"
+    import
+  end
+  factory :sale_importer do
+    name "saleimporter"
+    import
+  end
+  factory :membership_importer do
+    name "membershipimporter"
+    import
+  end
+  factory :installment_importer do
+    name "installmentimporter"
+    import
+  end
   factory :contacts_file_importer do
     name "contactsfileimporter"
+    import
+  end
+  factory :comment_importer do
+    name "commentimporter"
+    import
+  end
+  factory :communication_importer do
+    name "communicationimporter"
+    import
+  end
+  factory :follow_importer do
+    name "followimporter"
+    import
+  end
+  factory :enrollment_importer do
+    name "enrollmentimporter"
+    import
+  end
+  factory :dropout_importer do
+    name "dropoutimporter"
     import
   end
 end

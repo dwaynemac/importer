@@ -29,6 +29,11 @@ class ImportModule < ActiveRecord::Base
     end
   end
 
+  # override in child class if required
+  def handle_failed_rows?
+    false
+  end
+
   # override in child class
   def status_params
   end
@@ -37,8 +42,12 @@ class ImportModule < ActiveRecord::Base
   def map_status
   end
   
-  # override in child class
   def finished?
+    self.realtime_status == 'finished'
+  end
+
+  def failed?
+    self.realtime_status == 'failed'
   end
 
   # override in child class
@@ -62,7 +71,7 @@ class ImportModule < ActiveRecord::Base
       elsif self.status != 'waiting' && !self.ready?
         self.update_attribute(:status, 'waiting')
       end
-    elsif self.status != 'finished'
+    elsif self.status != 'finished' && self.status != 'failed' && self.status != 'rolledback'
       self.update_attributes(status: map_status(RestClient.get status_url, :params => status_params))
     end
     self.status

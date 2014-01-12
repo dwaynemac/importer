@@ -24,6 +24,7 @@ describe Import do
     describe "if ContactsModuleImport finished with failed rows" do
       before do
         cim.update_attribute :status, 'failed' 
+        cim.update_attribute :status_url, 'xxx' 
       end
       describe "and no other modules started" do
         it "returns true" do
