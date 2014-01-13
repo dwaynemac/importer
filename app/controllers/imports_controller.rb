@@ -63,6 +63,7 @@ class ImportsController < UserApplicationController
 
   # DELETE /imports/1/rollback
   def rollback
+    raise "waiting for modules to implement rollback"
     if @import.can_rollback? and @import.rollback
       respond_to do |format|
         format.html { redirect_to imports_url }

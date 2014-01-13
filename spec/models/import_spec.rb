@@ -21,13 +21,18 @@ describe Import do
   end
 
   describe "#can_rollback?" do
+    it "returns false" do
+      import.can_rollback?.should be_false
+    end
     describe "if ContactsModuleImport finished with failed rows" do
       before do
         cim.update_attribute :status, 'failed' 
       end
       describe "and no other modules started" do
         it "returns true" do
-          import.can_rollback?.should be_true
+          pending "waiting for rollback to be implemented in modules" do
+            import.can_rollback?.should be_true
+          end
         end
       end
       describe "and other modules already started" do
@@ -35,6 +40,7 @@ describe Import do
           tsi.update_attribute :status, 'working'
         end
         it "returns false" do
+          pending "waiting for rollback to be implemented in modules"
           import.can_rollback?.should be_false
         end
       end
@@ -44,11 +50,13 @@ describe Import do
         cim.update_attribute :status, 'finished'
       end
       it "return false" do
+        pending "waiting for rollback to be implemented in modules"
         import.can_rollback?.should be_false
       end
     end
     describe "if ContactsModuleImport hasnt started" do
       it "returns false" do
+        pending "waiting for rollback to be implemented in modules"
         import.can_rollback?.should be_false
       end
     end
