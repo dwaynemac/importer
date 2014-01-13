@@ -14,11 +14,7 @@ class EnrollmentImporter < CrmImporter
                       account_name: import.account.name,
                       object: 'enrollment',
                       file: csv,
-                      headers: [ 
-                        'instructor_id',
-                        'persona_id',
-                        'fecha'
-                      ]
+                      headers: %w(id fecha instructor_id persona_id contact_id school_id)
                     }
   end
 

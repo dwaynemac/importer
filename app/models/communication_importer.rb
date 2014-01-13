@@ -14,16 +14,8 @@ class CommunicationImporter < CrmImporter
                       account_name: import.account.name,
                       object: 'communication',
                       file: csv,
-                      headers: [ 
-                        'instructor_id',
-                        'fecha',
-                        'coeficiente_id',
-                        'observations',
-                        'type',
-                        'contact_type',
-                        'persona_id',
-                        'comosupo_id'
-                      ]
+                      headers: %w(id type contact_type persona_id fecha comosupo_id observations instructor_id
+                        coeficiente_id school_id created_at updated_at enrolled)
                     }
   end
 

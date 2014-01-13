@@ -14,13 +14,7 @@ class DropoutImporter < CrmImporter
                       account_name: import.account.name,
                       object: 'drop_out',
                       file: csv,
-                      headers: [ 
-                        'instructor_id',
-                        'persona_id',
-                        'fecha',
-                        'observations',
-                        'type'
-                      ]
+                      headers: %w(id persona_id fecha notas grado_id school_id reasons)
                     }
   end
 

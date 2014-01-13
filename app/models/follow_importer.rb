@@ -14,7 +14,7 @@ class FollowImporter < CrmImporter
                       account_name: import.account.name,
                       object: 'follow',
                       file: csv,
-                      headers: ['follows', 'cas_login']
+                      headers: %w(id nombre deleted firma genero apellido school_id cas_login follows)
                     }
   end
 
