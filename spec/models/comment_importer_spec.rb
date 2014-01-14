@@ -47,7 +47,7 @@ describe CommentImporter do
       end
       it "should set status_url" do
         ci.delegate_import()
-        ci.status_url.should == "test/v0/imports/1"
+        ci.status_url.should == "test/api/v0/imports/1"
       end
     end
 

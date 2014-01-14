@@ -47,7 +47,7 @@ describe FollowImporter do
       end
       it "should set status_url" do
         fi.delegate_import()
-        fi.status_url.should == "test/v0/imports/1"
+        fi.status_url.should == "test/api/v0/imports/1"
       end
     end
 

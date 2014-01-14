@@ -47,7 +47,7 @@ describe DropoutImporter do
       end
       it "should set status_url" do
         di.delegate_import()
-        di.status_url.should == "test/v0/imports/1"
+        di.status_url.should == "test/api/v0/imports/1"
       end
     end
 

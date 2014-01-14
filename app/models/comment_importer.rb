@@ -8,7 +8,7 @@ class CommentImporter < CrmImporter
   end
 
   def request_import (csv)
-    RestClient.post Crm::HOST + '/v0/imports',
+    RestClient.post api_url,
                     app_key: Crm::API_KEY,
                     import: {
                       account_name: import.account.name,

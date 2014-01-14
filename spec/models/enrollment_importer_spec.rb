@@ -47,7 +47,7 @@ describe EnrollmentImporter do
       end
       it "should set status_url" do
         ei.delegate_import()
-        ei.status_url.should == "test/v0/imports/1"
+        ei.status_url.should == "test/api/v0/imports/1"
       end
     end
 

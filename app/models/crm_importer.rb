@@ -20,6 +20,10 @@ class CrmImporter < ImportModule
   def request_import
   end
 
+  def api_url
+    Crm::HOST + '/api/v0/imports/'
+  end
+
   def delegate_import
     if Rails.env == 'development'
       csv = open(file_path)
@@ -30,7 +34,7 @@ class CrmImporter < ImportModule
     response = request_import csv
     if response.code == 201
       remote_import_id = JSON.parse(response.body)['id']
-      self.update_attributes(status_url: Crm::HOST + '/v0/imports/' + remote_import_id.to_s)
+      self.update_attributes(status_url: api_url + remote_import_id.to_s)
     end
   end
 
