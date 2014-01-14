@@ -10,7 +10,7 @@ class ImportFileUploader < CarrierWave::Uploader::Base
   version :contacts do
     process :extract_file => :personas
     def full_filename (for_file = model.import_file.file)
-      "personas.csv"
+      "contacts.csv"
     end
   end
 
@@ -73,7 +73,7 @@ class ImportFileUploader < CarrierWave::Uploader::Base
   version :communications do
     process :extract_file => :contacts
     def full_filename (for_file = model.import_file.file)
-      "contacts.csv"
+      "communications.csv"
     end
   end
   
