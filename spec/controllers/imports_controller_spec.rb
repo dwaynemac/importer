@@ -187,6 +187,9 @@ describe ImportsController do
 
   describe "DELETE rollback" do
     let(:import){create(:import, :account => @user.current_account)}
+    it "raises exception" do
+      expect{ delete :rollback, {:id => import.id}}.to raise_exception
+    end
     describe "if import failed in contacts_module" do
       before do
         create(:contacts_import_module, import: import, status: 'failed', status_url: 'xxx')
@@ -194,17 +197,20 @@ describe ImportsController do
       end
 
       it "delegates rollback to imported modules" do
+        pending "waiting for modules to implement rollback"
         Import.any_instance.should_receive :rollback
         delete :rollback, id: import.id
       end
 
       it "destroys the requested import" do
+        pending "waiting for modules to implement rollback"
         expect {
           delete :rollback, {:id => import.id}
         }.to change(Import, :count).by(-1)
       end
 
       it "redirect to the imports list" do
+        pending "waiting for modules to implement rollback"
         delete :rollback, {:id => import.id}
         response.should redirect_to(imports_url)
       end

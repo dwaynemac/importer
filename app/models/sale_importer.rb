@@ -19,9 +19,9 @@ class SaleImporter < ImportModule
     # Send file to fnz module using import api
     response = RestClient.post  Fnz::HOST + '/api/v0/imports',
                                 app_key: Fnz::API_KEY,
-                                padma_id: self.import.account.name,
                                 import: {
                                     object: 'Sale',
+                                    padma_id: self.import.account.name,
                                     upload: csv
                                 }
     if response.code == 201

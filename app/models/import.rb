@@ -15,6 +15,8 @@ class Import < ActiveRecord::Base
 
   # @return [Boolean]
   def can_rollback?
+    return false # currently many modules dont support rollback
+
     # if a module other that contacts started running we can't rollback
     if self.import_modules.select{|im| im.type != 'ContactsImportModule' && im.status.in?(%W(working finished)) }.count > 0
       return false
