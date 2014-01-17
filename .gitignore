@@ -6,7 +6,6 @@
 /.env
 .idea
 /.ruby-gemset
-/public/*
 *.swp
 /coverage
 Procfile.dev
