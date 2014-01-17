@@ -10,3 +10,6 @@ contacts_key: 844d8c2d20a9cf9e97086df94f01e7bdd3d9afaa716055315706f2e31f40dc097c
 devise_secret_key: 2c653598bed65f0f17d870a49774d13cee73037a81ffec3e434a8bd8140093cf2202fbc30252c9c7bc7dbc31973cbfa144a37db5dfd5863dc28c8fddd684100f
 kshema_key: a7ad4703203d9a3a120 
 fnz_key: zzz
+S3_KEY: yyy
+S3_SECRET: xxx
+S3_BUCKET_NAME: asd-a
