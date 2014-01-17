@@ -9,7 +9,10 @@ gem 'protected_attributes', '~> 1.0.5' # Rails 4 support for Mass Assignment Sec
 gem 'devise', '~> 3.1'
 gem 'devise_cas_authenticatable'
 gem 'carrierwave'
+
+gem 'unf'
 gem 'fog'
+
 gem 'accounts_client'
 gem 'contacts_client', '~> 0.0.21'
 
