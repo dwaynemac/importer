@@ -12,6 +12,8 @@ module Fnz
     HOST = "localhost:3008"
   elsif Rails.env.production?
     HOST = "fnz.herokuapp.com"
+  elsif Rails.env.staging?
+    HOST = "fnz-staging.herokuapp.com"
   elsif Rails.env.test?
     HOST = "test"
   end
@@ -19,7 +21,7 @@ end
 
 module Kshema
   API_KEY = ENV['kshema_key']
-  if Rails.env.production?
+  if Rails.env.production? || Rails.env.staging?
     HOST = "metododerose.org/kshema"
   elsif Rails.env.development?
     HOST = "localhost:4000"
@@ -34,6 +36,8 @@ module Attendance
     HOST = "localhost:3015"
   elsif Rails.env.production?
     HOST = "padma-attendance.herokuapp.com"
+  elsif Rails.env.staging?
+    HOST = "padma-attendance-staging.herokuapp.com"
   elsif Rails.env.test?
     HOST = "test"
   end
@@ -45,6 +49,8 @@ module Crm
     HOST = "localhost:3000"
   elsif Rails.env.production?
     HOST = "crm.padm.am"
+  elsif Rails.env.staging?
+    HOST = "padma-crm-staging.herokuapp.com"
   elsif Rails.env.test?
     HOST = "test"
   end
