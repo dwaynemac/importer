@@ -92,6 +92,8 @@ class ImportModule < ActiveRecord::Base
         if im.ready?
           Rails.logger.info "#{im.type} ready, delegating."
           im.delegate_import 
+        else
+          Rails.logger.info "#{im.type} not ready."
         end
       rescue Errno::ECONNREFUSED, RestClient::InternalServerError => e
         Rails.logger.info "#{e.message} Failed connection to #{im.name}"
