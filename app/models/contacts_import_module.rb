@@ -16,7 +16,7 @@ class ContactsImportModule < ImportModule
       contacts_csv = open(self.import.import_file.contacts.path)
     else
       # use s3 file on production
-      contacts_CSV = open_tmp_file(self.import.import_file.contacts.url)
+      contacts_csv = open_tmp_file(self.import.import_file.contacts.url)
     end
 
 
