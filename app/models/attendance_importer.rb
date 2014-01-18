@@ -13,7 +13,7 @@ class AttendanceImporter < ImportModule
     if Rails.env == 'development'
       csv = open(self.import.import_file.attendances.path)
     else
-      csv = open(self.import.import_file.attendances.url)  
+      csv = open_tmp_file(self.import.import_file.attendances.url)
     end
 
     # Send file to attendance module using import api

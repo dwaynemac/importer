@@ -13,7 +13,7 @@ class TrialLessonImporter < ImportModule
     if Rails.env == 'development'
       csv = open(self.import.import_file.trial_lessons.path)
     else
-      csv = open(self.import.import_file.trial_lessons.url)  
+      csv = open_tmp_file(self.import.import_file.trial_lessons.url)
     end
 
     # Send file to attendance module using import api

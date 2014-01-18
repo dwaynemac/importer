@@ -13,7 +13,7 @@ class InstallmentImporter < ImportModule
     if Rails.env == 'development'
       csv = open(self.import.import_file.installments.path)
     else
-      csv = open(self.import.import_file.installments.url)
+      csv = open_tmp_file(self.import.import_file.installments.url)
     end
 
     # Send file to fnz module using import api

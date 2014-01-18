@@ -16,7 +16,7 @@ class ProductImporter < ImportModule
       csv = open(self.import.import_file.products.path)
     else
       # use s3 file on production
-      csv = open(self.import.import_file.products.url)
+      csv = open_tmp_file(self.import.import_file.products.url)
     end
 
 
