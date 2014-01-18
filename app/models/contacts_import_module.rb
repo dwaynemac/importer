@@ -36,6 +36,9 @@ class ContactsImportModule < ImportModule
       # If import was created successfully create an import module that will show the status of this import
       remote_import_id = JSON.parse(response)['id']
       self.update_attributes(status_url: Contacts::HOST + '/v0/imports/' + remote_import_id)
+    else
+      response_body = JSON.parse(response)
+      Rails.logger.warn "ContactsImportModule##{self.id} #{response_body['message']}. Errors: #{response_body['errors']}"
     end
   end
 
