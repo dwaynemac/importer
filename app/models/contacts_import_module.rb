@@ -16,8 +16,9 @@ class ContactsImportModule < ImportModule
       contacts_csv = open(self.import.import_file.contacts.path)
     else
       # use s3 file on production
-      contacts_csv = open(self.import.import_file.contacts.url)
-      contacts_csv.meta_add_field("content-type", "text/csv")
+      contacts_CSV = open_tmp_file(self.import.import_file.contacts.url)
+      # contacts_csv = open(self.import.import_file.contacts.url)
+      # contacts_csv.meta_add_field("content-type", "text/csv")
     end
 
 

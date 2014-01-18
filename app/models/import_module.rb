@@ -77,6 +77,13 @@ class ImportModule < ActiveRecord::Base
     self.status
   end
 
+  def open_tmp_file(url)
+    filename = File.basename(URI.parse(url).path)
+    File.open(filename, 'wb') do |fo|
+        fo.write(open(url).read)
+    end
+  end
+
   def self.update_statuses
     self.not_finished.delegated.each do |im|
       im.realtime_status
