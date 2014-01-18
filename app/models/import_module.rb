@@ -79,7 +79,7 @@ class ImportModule < ActiveRecord::Base
 
   def open_tmp_file(url)
     filename = File.basename(URI.parse(url).path)
-    f = File.open(filename, 'wb')
+    f = File.open(filename, 'a+b')
     f.write(open(url).read)
     f
     #File.open(filename, 'wb') do |fo|
