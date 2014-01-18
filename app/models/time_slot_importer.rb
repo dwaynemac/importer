@@ -16,7 +16,7 @@ class TimeSlotImporter < ImportModule
       csv = open(self.import.import_file.time_slots.path)
     else
       # use s3 file on production
-      csv = open(self.import.import_file.time_slots.url)
+      csv = open_tmp_file(self.import.import_file.time_slots.url)
     end
 
 

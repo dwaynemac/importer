@@ -13,7 +13,7 @@ class SaleImporter < ImportModule
     if Rails.env == 'development'
       csv = open(self.import.import_file.sales.path)
     else
-      csv = open(self.import.import_file.sales.url)
+      csv = open_tmp_file(self.import.import_file.sales.url)
     end
 
     # Send file to fnz module using import api

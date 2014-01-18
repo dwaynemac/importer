@@ -28,7 +28,7 @@ class CrmImporter < ImportModule
     if Rails.env == 'development'
       csv = open(file_path)
     else
-      csv = open(file_url)
+      csv = open_tmp_file(file_url)
     end
 
     response = request_import csv
