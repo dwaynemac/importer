@@ -95,6 +95,8 @@ class ImportModule < ActiveRecord::Base
         end
       rescue Errno::ECONNREFUSED, RestClient::InternalServerError => e
         Rails.logger.info "#{e.message} Failed connection to #{im.name}"
+      rescue RestClient::Exception => e
+        Rails.logger.warn "#{im.type} delegation failed."
       end
     end
   end
