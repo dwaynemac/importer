@@ -20,6 +20,20 @@ describe ImportModule do
     end
   end
 
+  describe "#open_tmp_file" do
+    pending "avoid slow test"
+    before do
+      im = ImportModule.new
+      @ret = im.open_tmp_file("https://s3.amazonaws.com/importer-staging/uploads/import/import_file/2/attendances.csv")
+    end
+    it "returns not nil" do
+      @ret.should_not be_nil
+    end
+    it "returns a File" do
+      @ret .should be_a File
+    end
+  end
+
   describe "#ignore_failed_rows" do
     describe "when status is not 'pending'" do
       before { import_module.update_attribute :status, 'ready' }
