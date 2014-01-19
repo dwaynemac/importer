@@ -78,14 +78,7 @@ class ImportModule < ActiveRecord::Base
   end
 
   def open_tmp_file(url)
-    open(url)
-=begin
-    USE simple open-uri
-    filename = File.basename(URI.parse(url).path)
-    f = File.open(filename, 'a+b')
-    f.write(open(url).read)
-    f
-=end
+    open(url) # this is open-uri open.
   end
 
   def self.update_statuses
