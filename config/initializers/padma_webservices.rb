@@ -22,7 +22,7 @@ end
 module Kshema
   API_KEY = ENV['kshema_key']
   if Rails.env.production? || Rails.env.staging?
-    HOST = "metododerose.org/kshema"
+    HOST = "https://www.metododerose.org/kshema"
   elsif Rails.env.development?
     HOST = "localhost:4000"
   elsif Rails.env.test?
