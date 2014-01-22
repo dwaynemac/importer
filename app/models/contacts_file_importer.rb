@@ -7,6 +7,7 @@ class ContactsFileImporter < ImportModule
   def delegate_import
     response = RestClient.post  Kshema::HOST + '/pws/v1/files_export',
                                 key: Kshema::API_KEY,
+                                environment: Rails.env,
                                 account_name: self.import.account.name
 
     if(response.code == 201)
