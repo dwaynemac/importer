@@ -8,6 +8,23 @@ describe ImportModule do
 
   let(:import_module){create(:import_module)}
 
+  describe "#processed_lines" do
+    before do
+      RestClient.stub(:get).and_return({import: {:status => 'working',
+                             :failed_rows => '1',
+                             :imported_rows => '2'}}.to_json)
+    end
+
+    it "returns integer" do
+      im = create(:contacts_import_module)
+      im.processed_lines.should be_a Integer
+    end
+    it "returns count of processed lines" do
+      im = create(:contacts_import_module)
+      im.processed_lines.should == 3
+    end
+  end
+
   describe "#realtime_status" do
     describe "if status_url is nil" do
       it "returns waiting" do
@@ -17,24 +34,6 @@ describe ImportModule do
         ImportModule.any_instance.stub(:ready?).and_return(true)
         import_module.realtime_status.should == 'ready'
       end
-    end
-  end
-
-  describe "#open_tmp_file" do
-    let(:url){"https://s3.amazonaws.com/importer-staging/uploads/import/import_file/2/time_slots.csv"}
-    let(:im){ImportModule.new}
-    let(:ret){im.open_tmp_file(url)}
-    it "returns not nil" do
-      ret.should_not be_nil
-    end
-    it "returns a File" do
-      ret.should be_a File
-    end
-    it "keeps same size" do
-      ret.size.should == 372391
-    end
-    it "keeps same content" do
-      IO.read(ret).should == open(url).read
     end
   end
 

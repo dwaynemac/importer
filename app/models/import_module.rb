@@ -39,7 +39,13 @@ class ImportModule < ActiveRecord::Base
   end
 
   # override in child class
+  # @return [String]
   def map_status
+  end
+
+  # override in child class
+  # @return [Integer]
+  def map_processed_lines(response)
   end
   
   def finished?
@@ -75,6 +81,11 @@ class ImportModule < ActiveRecord::Base
       self.update_attributes(status: map_status(RestClient.get status_url, :params => status_params))
     end
     self.status
+  end
+
+  # @return [Integer]
+  def processed_lines
+    @processed_lines ||= map_processed_lines(RestClient.get status_url, :params => status_params)
   end
 
   def open_tmp_file(url)

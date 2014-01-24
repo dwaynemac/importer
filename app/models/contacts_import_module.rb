@@ -78,4 +78,12 @@ class ContactsImportModule < ImportModule
       json['import']['status']
     end
   end
+
+  def map_processed_lines(response)
+    json = JSON.parse(response)
+    failed = json['import']['failed_rows'].to_i
+    successfull = json['import']['imported_rows'].to_i
+    failed + successfull
+  end
+
 end
