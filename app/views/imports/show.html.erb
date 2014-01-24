@@ -13,6 +13,7 @@
   <% @import.import_modules.each do |im| %>
   <li>
     <%= im.name %> <span class="label label-default"><%= im.status %></span>
+    <%= im.processed_lines -%>
     <% if im.status == 'pending' %>
       <% if im.handle_failed_rows? %>
         There are failed rows! Do you want to continue?
