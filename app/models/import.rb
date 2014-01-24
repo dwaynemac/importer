@@ -48,7 +48,6 @@ class Import < ActiveRecord::Base
   # then it must be working
   def realtime_status 
     return status if status == 'finished' or status == 'failed'
-    return @realtime_status if @realtime_status
     
     self.import_modules.update_statuses
 
@@ -61,7 +60,7 @@ class Import < ActiveRecord::Base
     elsif import_modules.load.select{ |im| im.status != 'ready' && im.status != 'waiting' }.count > 0 and status != 'working'
       update_attribute(:status, 'working')
     end
-    @realtime_status = status
+    status
   end
 
   private
