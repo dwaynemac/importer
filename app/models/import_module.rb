@@ -78,7 +78,9 @@ class ImportModule < ActiveRecord::Base
   end
 
   def open_tmp_file(url)
-    open(url) # this is open-uri open.
+    tmp = open(url) # this is open-uri open.
+    tmp.meta_add_field 'content-type', 'text/csv'
+    tmp
   end
 
   def self.update_statuses
