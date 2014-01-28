@@ -33,7 +33,7 @@ describe MembershipImporter do
   describe "#delegate_import" do
     before do
       mi.stub_chain(:import_file, :memberships, :url).and_return("x_path")
-      mi.stub_chain(:open, :read) {"x_file"}
+      mi.stub_chain(:open_tmp_file, :read) {"x_file"}
     end
 
     describe "if fnz-ws responds ok" do

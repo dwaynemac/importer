@@ -33,7 +33,7 @@ describe InstallmentImporter do
   describe "#delegate_import" do
     before do
       ii.stub_chain(:import_file, :installments, :url).and_return("x_path")
-      ii.stub_chain(:open, :read) {"x_file"}
+      ii.stub_chain(:open_tmp_file, :read) {"x_file"}
     end
 
     describe "if fnz-ws responds ok" do

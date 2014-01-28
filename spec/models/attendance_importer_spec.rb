@@ -37,7 +37,7 @@ describe AttendanceImporter do
   describe "#delegate_import" do
     before do
       ai.stub_chain(:import_file, :attendances, :url).and_return("x_path")  
-      ai.stub_chain(:open, :read) {"x_file"} 
+      ai.stub_chain(:open_tmp_file, :read) {"x_file"} 
     end
 
     describe "if attendances-ws responds ok" do

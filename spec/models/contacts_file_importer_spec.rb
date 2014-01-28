@@ -37,7 +37,7 @@ describe ContactsFileImporter do
   describe "#delegate_import" do
     before do
       cfi.stub_chain(:import_file, :time_slots, :url).and_return("x_path")  
-      cfi.stub_chain(:open, :read) {"x_file"} 
+      cfi.stub_chain(:open_tmp_file, :read) {"x_file"} 
     end
 
     describe "if attendances-ws responds ok" do

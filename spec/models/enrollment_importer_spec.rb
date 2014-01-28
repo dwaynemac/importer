@@ -37,7 +37,7 @@ describe EnrollmentImporter do
   describe "#delegate_import" do
     before do
       ei.stub_chain(:import_file, :time_slots, :url).and_return("x_path")  
-      ei.stub_chain(:open, :read) {"x_file"} 
+      ei.stub_chain(:open_tmp_file, :read) {"x_file"} 
     end
 
     describe "if crm responds ok" do

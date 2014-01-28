@@ -37,7 +37,7 @@ describe TrialLessonImporter do
   describe "#delegate_import" do
     before do
       trial_li.stub_chain(:import_file, :trial_lessons, :url).and_return("x_path")  
-      trial_li.stub_chain(:open, :read) {"x_file"} 
+      trial_li.stub_chain(:open_tmp_file, :read) {"x_file"} 
     end
 
     describe "if attendances-ws responds ok" do

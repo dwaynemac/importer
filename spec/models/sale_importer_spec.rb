@@ -46,7 +46,7 @@ describe SaleImporter do
   describe "#delegate_import" do
     before do
       si.stub_chain(:import_file, :sales, :url).and_return("x_path")
-      si.stub_chain(:open, :read) {"x_file"}
+      si.stub_chain(:open_tmp_file, :read) {"x_file"}
     end
 
     describe "if fnz-ws responds ok" do

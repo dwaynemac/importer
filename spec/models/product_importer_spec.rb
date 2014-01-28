@@ -25,7 +25,7 @@ describe ProductImporter do
   describe "#delegate_import" do
     before do
       pi.stub_chain(:import_file, :products, :url).and_return("x_path")
-      pi.stub_chain(:open, :read) {"x_file"}
+      pi.stub_chain(:open_tmp_file, :read) {"x_file"}
     end
 
     describe "if fnz-ws responds ok" do

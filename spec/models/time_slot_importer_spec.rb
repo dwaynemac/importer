@@ -37,7 +37,7 @@ describe TimeSlotImporter do
   describe "#delegate_import" do
     before do
       tsi.stub_chain(:import_file, :time_slots, :url).and_return("x_path")  
-      tsi.stub_chain(:open, :read) {"x_file"} 
+      tsi.stub_chain(:open_tmp_file, :read) {"x_file"} 
     end
 
     describe "if attendances-ws responds ok" do

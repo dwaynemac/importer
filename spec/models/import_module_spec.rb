@@ -20,6 +20,7 @@ describe ImportModule do
     end
   end
 
+=begin  
   describe "#open_tmp_file" do
     let(:url){"https://s3.amazonaws.com/importer-staging/uploads/import/import_file/2/time_slots.csv"}
     let(:im){ImportModule.new}
@@ -37,6 +38,7 @@ describe ImportModule do
       IO.read(ret).should == open(url).read
     end
   end
+=end
 
   describe "#ignore_failed_rows" do
     describe "when status is not 'pending'" do
