@@ -78,14 +78,14 @@ class ImportModule < ActiveRecord::Base
         self.update_attribute(:status, 'waiting')
       end
     elsif self.status != 'finished' && self.status != 'failed' && self.status != 'rolledback'
-      self.update_attributes(status: map_status(RestClient.get status_url, :params => status_params))
+      self.update_attributes(status: map_status(get_remote_status))
     end
     self.status
   end
 
   # @return [Integer]
   def processed_lines
-    @processed_lines ||= map_processed_lines(RestClient.get status_url, :params => status_params)
+    @processed_lines ||= map_processed_lines(get_remote_status)
   end
 
   def open_tmp_file(url)
@@ -118,5 +118,12 @@ class ImportModule < ActiveRecord::Base
         Rails.logger.warn "#{im.type} delegation failed."
       end
     end
+  end
+
+  private
+
+  def get_remote_status(skip_cache=false)
+    remove_instance_variable(:@get_remote_status) if skip_cache
+    @get_remote_status ||= RestClient.get status_url, :params => status_params
   end
 end
