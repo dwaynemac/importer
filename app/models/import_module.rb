@@ -85,6 +85,7 @@ class ImportModule < ActiveRecord::Base
 
   # @return [Integer]
   def processed_lines
+    return 0 if status_url.blank?
     @processed_lines ||= map_processed_lines(get_remote_status)
   end
 
@@ -123,6 +124,7 @@ class ImportModule < ActiveRecord::Base
   private
 
   def get_remote_status(skip_cache=false)
+    return if status_url.blank?
     remove_instance_variable(:@get_remote_status) if skip_cache
     @get_remote_status ||= RestClient.get status_url, :params => status_params
   end
