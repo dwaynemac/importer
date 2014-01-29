@@ -1,7 +1,7 @@
 class CrmImporter < ImportModule
 
   def status_params
-    { app_key: Crm::API_KEY, import: { account_name: import.account.name } }
+    { app_key: Crm::API_KEY, import: { account_name: import.account.name }, account_name: import.account.name }
   end
 
   def handle_failed_rows?
