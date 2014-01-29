@@ -39,6 +39,13 @@ class CrmImporter < ImportModule
   end
 
   def map_status (response)
-    JSON.parse(response)['import']['status']
+    json = JSON.parse(response)
+    if json['import']['failed_rows'].to_i > 0 and json['import']['status'] == 'finished'
+      self.update_attribute(:failed_rows, true)
+      'pending'
+    else
+      json['import']['status']
+    end
+
   end
 end
