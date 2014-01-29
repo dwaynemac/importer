@@ -8,28 +8,55 @@
 <%= link_to 'contacts', @import.import_file.contacts.url %>
 
 <h3>Import status</h3>
-<h5>Overall status: <span class="label label-default overall-status"><%= @import.status %></span></h5>
-<ul>
+<h5>Overall status: <span class="label label-defatrt overall-status"><%= @import.status %></span></h5>
+<table class="table table-hover table-responsive">
+  <tr>
+    <th><%= t('.module_name') %></th>
+    <th><%= t('.status') %></th>
+    <th><%= t('.processed_lines') %></th>
+    <th></th>
+  </tr>
   <% @import.import_modules.each do |im| %>
-  <li>
-    <%= im.name %> <span class="label label-default"><%= im.status %></span>
-    <%= im.processed_lines -%>
-    <% if im.status == 'pending' %>
-      <% if im.handle_failed_rows? %>
-        There are failed rows! Do you want to continue?
-        <%= link_to "Yes", import_module_path(id: im.id, import_module: {ignore_failed_rows: 'true'}), method: :put %>
-        <%= link_to "No", import_module_path(id: im.id, import_module: {ignore_failed_rows: 'false'}), method: :put %>
-      <% elsif im.name == 'Contacts files' %>
-        Some files could not be uploaded... Do you want to try again?
-        <%= link_to "Yes", failed_files_import_module_path(id: im.id) %>
-        <%= link_to "No", import_module_path(id: im.id, import_module: {status: 'finished'}), method: :put %>
+  <% row_css_class = case im.status
+                     when 'pending'
+                       'warning'
+                     when 'working'
+                       'active'
+                     when 'finished'
+                       'success'
+                     when 'failed'
+                       'danger'
+                     end
+  -%>
+  <tr class="<%= row_css_class %>">
+    <td>
+      <%= im.name %>
+    </td>
+    <td>
+      <span class="label label-default"><%= im.status %></span>
+    </td>
+    <td>
+      <span class="badge"><%= im.processed_lines -%></span>
+    </td>
+    <td>
+      <% if im.status == 'pending' %>
+        <% if im.handle_failed_rows? %>
+          There are failed rows! Do you want to continue?
+          <%= link_to "Yes", import_modtre_path(id: im.id, import_modtre: {ignore_failed_rows: 'true'}), method: :put %>
+          <%= link_to "No", import_modtre_path(id: im.id, import_modtre: {ignore_failed_rows: 'false'}), method: :put %>
+        <% elsif im.name == 'Contacts files' %>
+          Some files cotrd not be uploaded... Do you want to try again?
+          <%= link_to "Yes", failed_files_import_modtre_path(id: im.id) %>
+          <%= link_to "No", import_modtre_path(id: im.id, import_modtre: {status: 'finished'}), method: :put %>
+        <% end %>
+      <% elsif im.status == 'failed' and im.failed_rows %>
+          <%= link_to "Failed Rows CSV", failed_rows_import_modtre_path(im, format: 'csv') %>
       <% end %>
-    <% elsif im.status == 'failed' and im.failed_rows %>
-        <%= link_to "Failed Rows CSV", failed_rows_import_module_path(im, format: 'csv') %>
-    <% end %>
-  </li>
+    </td>
+  </tr>
   <% end %>
-</ul>
+</table>
+
 
 
 <% if not @import.finished? %> <%= link_to 'Edit', edit_import_path(@import) %> | <% end %> 
