@@ -14,14 +14,15 @@ describe ImportModule do
                              :failed_rows => '1',
                              :imported_rows => '2'}}.to_json)
     end
-
-    it "returns integer" do
-      im = create(:contacts_import_module)
-      im.processed_lines.should be_a Integer
-    end
-    it "returns count of processed lines" do
-      im = create(:contacts_import_module)
-      im.processed_lines.should == 3
+    describe "if import_module has a status_url" do
+      it "returns integer" do
+        im = create(:contacts_import_module, status_url: "http://the-usl")
+        im.processed_lines.should be_a Integer
+      end
+      it "returns count of processed lines" do
+        im = create(:contacts_import_module, status_url: "http://the-usl")
+        im.processed_lines.should == 3
+      end
     end
   end
 
