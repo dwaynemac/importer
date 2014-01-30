@@ -51,6 +51,8 @@
         <% end %>
       <% elsif im.status == 'failed' and im.failed_rows %>
           <%= link_to t('.download_failed_rows_csv'), failed_rows_import_module_path(im, format: 'csv') %>
+          |
+          <%= link_to t('.ignore_failed_rows_and_continue'), import_module_path(id: im.id, import_module: {status: 'finished'}), method: :put %>
       <% end %>
     </td>
   </tr>
