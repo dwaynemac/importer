@@ -43,7 +43,8 @@ class TimeSlotImporter < ImportModule
                                     'saturday',
                                     'observations',
                                     '',
-                                    ''
+                                    '',
+                                    'student_ids'
                                   ]
                                 }
     if response.code == 201
