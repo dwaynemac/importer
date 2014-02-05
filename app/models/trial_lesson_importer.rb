@@ -8,6 +8,15 @@ class TrialLessonImporter < ImportModule
   def map_status (response)
     JSON.parse(response)['status']
   end
+
+  def map_processed_lines(response)
+    json = JSON.parse(response)
+    if json && json['import']
+      failed = json['import']['failed_rows'].to_i
+      successfull = json['import']['imported_ids'].to_i
+      failed + successfull
+    end
+  end
  
   def delegate_import
     if Rails.env == 'development'
