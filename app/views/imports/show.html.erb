@@ -16,7 +16,7 @@
     <th><%= t('.processed_lines') %></th>
     <th></th>
   </tr>
-  <% @import.import_modules.each do |im| %>
+  <% @import.import_modules.sort{|a,b|a.name <=> b.name}.each do |im| %>
   <% row_css_class = case im.status
                      when 'pending'
                        'warning'
