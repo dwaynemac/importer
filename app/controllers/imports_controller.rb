@@ -11,6 +11,7 @@ class ImportsController < UserApplicationController
   # GET /imports/1.json
   def show
     @import.realtime_status
+    @import.import_modules.delegate_ready_imports
     @import.import_modules.each do |im|
       im.processed_lines
     end
