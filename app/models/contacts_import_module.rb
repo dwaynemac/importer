@@ -30,8 +30,7 @@ class ContactsImportModule < ImportModule
                         :headers => %w(id dni nombres apellidos dire tel cel mail grado_id instructor_id coeficiente_id genero foto
                           fecha_nacimiento inicio_practicas profesion	notes follow indice_fidelizacion codigo_postal school_id
                           current_plan_id	created_at updated_at estimated_age	company	job	city locality business_phone
-                          country_id state identity publish_on_gdp last_enrollment in_formation id_scan padma_id foto_migrated
-                          id_scan_migrated padma_follow_id)
+                          country_id state identity publish_on_gdp last_enrollment in_formation id_scan tags)
                       }
       if(response.code == 201)
         # If import was created successfully create an import module that will show the status of this import
