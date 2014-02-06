@@ -63,7 +63,11 @@ class TimeSlotImporter < ImportModule
       self.update_attributes(status_url: Attendance::HOST + '/api/v0/imports/' + remote_import_id.to_s)
     end
   rescue RestClient::Exception => e
-    response_body = JSON.parse(e.response)
+    response_body = begin
+      JSON.parse(e.response)
+    rescue
+      e.response
+    end
     Rails.logger.warn "#{self.type}##{self.id} #{response_body['error']}"
   end
 
