@@ -106,7 +106,6 @@ class ImportModule < ActiveRecord::Base
     # FIXME if an import_module's finished status is not "finished" this wont work for it.
     self.not_finished.not_delegated.each do |im|
       begin
-        require 'byebug'; byebug
         Rails.logger.info "checking #{im.type}"
         if im.ready?
           Rails.logger.info "#{im.type} ready, delegating."
