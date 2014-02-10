@@ -106,6 +106,7 @@ class ImportModule < ActiveRecord::Base
     # FIXME if an import_module's finished status is not "finished" this wont work for it.
     self.not_finished.not_delegated.each do |im|
       begin
+        require 'byebug'; byebug
         Rails.logger.info "checking #{im.type}"
         if im.ready?
           Rails.logger.info "#{im.type} ready, delegating."
@@ -113,10 +114,8 @@ class ImportModule < ActiveRecord::Base
         else
           Rails.logger.info "#{im.type} not ready."
         end
-      rescue Errno::ECONNREFUSED, RestClient::InternalServerError => e
-        Rails.logger.info "#{e.message} Failed connection to #{im.name}"
-      rescue RestClient::Exception => e
-        Rails.logger.warn "#{im.type} delegation failed."
+      rescue RestClient::Exception, Errno::ECONNREFUSED => e
+        Rails.logger.warn "#{im.type} delegation failed. Error: #{e.class}. Message: #{e.message}."
       end
     end
   end
