@@ -113,10 +113,8 @@ class ImportModule < ActiveRecord::Base
         else
           Rails.logger.info "#{im.type} not ready."
         end
-      rescue Errno::ECONNREFUSED, RestClient::InternalServerError => e
-        Rails.logger.info "#{e.message} Failed connection to #{im.name}"
-      rescue RestClient::Exception => e
-        Rails.logger.warn "#{im.type} delegation failed."
+      rescue RestClient::Exception, Errno::ECONNREFUSED => e
+        Rails.logger.warn "#{im.type} delegation failed. Error: #{e.class}. Message: #{e.message}."
       end
     end
   end
