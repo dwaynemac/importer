@@ -4,11 +4,25 @@
   <a><span class="badge">3</span> Check the import status</a>
 </div>
 <%= form_for(@import) do |f| %>
-    <ul>
-      <li><b>Kshêma</b></li>
-      <li>Sys</li>
-      <li>Other</li>
-    </ul>
+  <div class="radio">
+    <label>
+      <input type="radio" name="optionsRadios" id="optionsRadios1" value="kshema" checked>
+      Kshêma
+    </label>
+  </div>
+  <div class="radio">
+    <label>
+      <input type="radio" name="optionsRadios" id="optionsRadios1" value="sys">
+      SYS
+    </label>
+  </div>
+  <div class="radio">
+    <label>
+      <input type="radio" name="optionsRadios" id="optionsRadios1" value="other">
+      Other
+    </label>
+  </div>
+    
     <div class="actions">
       <%= f.submit %>
     </div>
