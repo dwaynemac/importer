@@ -14,8 +14,7 @@ class CommentImporter < CrmImporter
                       account_name: import.account.name,
                       object: 'comment',
                       file: csv,
-                      headers:  %w(id instructor_id persona_id school_id type observations fecha
-                                    confirmed done created_at updated_at)
+                      headers:  headers
                     }
   end
 
@@ -25,5 +24,17 @@ class CommentImporter < CrmImporter
 
   def my_name
     'Comments'
+  end
+
+  def headers
+    case self.import.source_system
+      when 'kshema'
+        %w(id instructor_id persona_id school_id type observations fecha
+                                      confirmed done created_at updated_at)
+      when 'sys'
+        %w()
+      when 'other'
+        %w()
+    end
   end
 end

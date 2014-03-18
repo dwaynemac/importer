@@ -14,7 +14,7 @@ class EnrollmentImporter < CrmImporter
                       account_name: import.account.name,
                       object: 'enrollment',
                       file: csv,
-                      headers: %w(id fecha instructor_id persona_id contact_id school_id)
+                      headers: headers
                     }
   end
 
@@ -24,5 +24,16 @@ class EnrollmentImporter < CrmImporter
 
   def my_name
     'Enrollments'
+  end
+
+  def headers
+    case self.import.source_system
+      when 'kshema'
+        %w(id fecha instructor_id persona_id contact_id school_id)
+      when 'sys'
+        %w()
+      when 'other'
+        %w()
+    end
   end
 end

@@ -3,11 +3,13 @@ class Import < ActiveRecord::Base
 
   mount_uploader :import_file, ImportFileUploader
 
-  attr_accessible :import_file, :status
+  attr_accessible :import_file, :status, :source_system
 
   has_many :import_modules, dependent: :destroy
 
   after_save :process_import_file
+
+  validates_presence_of :source_system
 
   def finished?
     return realtime_status == 'finished'
@@ -28,7 +30,14 @@ class Import < ActiveRecord::Base
 
   def process_import_file
     if import_file.present? and not already_processed?
-      importer = KshemaImporter.new(self)
+      case self.source_system
+      when 'kshema'
+        importer = KshemaImporter.new(self)
+      when 'sys'
+        importer = SysImporter.new(self)
+        # when 'other'
+        #   importer = CustomImporter.new(self)
+      end
       importer.process
     end
   end

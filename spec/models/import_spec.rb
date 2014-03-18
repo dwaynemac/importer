@@ -2,14 +2,14 @@ require 'spec_helper'
 
 describe Import do
 
-  let(:import) { create(:import) }
+  let(:import) { create(:import, source_system: 'kshema') }
   let(:cim) { create(:contacts_import_module, import: import) }
   let(:tsi) { create(:time_slot_importer, import: import) }
   before do
     cim
     tsi
   end
-
+  
   describe "#destroy" do
     it "destroys all import_modules too" do
       ImportModule.exists?(id: cim.id).should be_true

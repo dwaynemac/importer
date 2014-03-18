@@ -14,7 +14,7 @@ class DropoutImporter < CrmImporter
                       account_name: import.account.name,
                       object: 'drop_out',
                       file: csv,
-                      headers: %w(id persona_id fecha notas grado_id school_id instructor_id reasons)
+                      headers: headers
                     }
   end
 
@@ -24,5 +24,14 @@ class DropoutImporter < CrmImporter
 
   def my_name
     'Drop outs'
+  end
+
+  def headers
+    case self.import.source_system
+      when 'kshema'
+        %w(id persona_id fecha notas grado_id school_id instructor_id reasons)
+      when 'sys'
+        %w()
+      end
   end
 end

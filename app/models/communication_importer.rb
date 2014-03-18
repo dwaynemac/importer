@@ -14,8 +14,7 @@ class CommunicationImporter < CrmImporter
                       account_name: import.account.name,
                       object: 'communication',
                       file: csv,
-                      headers: %w(id type contact_type persona_id fecha comosupo_id observations instructor_id
-                        coeficiente_id school_id created_at updated_at enrolled)
+                      headers: headers
                     }
   end
 
@@ -25,5 +24,17 @@ class CommunicationImporter < CrmImporter
 
   def my_name
     'Communications'
+  end
+
+  def headers
+    case self.import.source_system
+      when 'kshema'
+        %w(id type contact_type persona_id fecha comosupo_id observations instructor_id
+                          coeficiente_id school_id created_at updated_at enrolled)
+      when 'sys'
+        %w()
+      when 'other'
+        %w()
+    end
   end
 end

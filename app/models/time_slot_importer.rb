@@ -37,24 +37,7 @@ class TimeSlotImporter < ImportModule
                                 import: {
                                   object: 'TimeSlot',
                                   csv_file: csv,
-                                  headers: [
-                                    'external_id',
-                                    'name',
-                                    'padma_uid',
-                                    'start_at',
-                                    'end_at',
-                                    'sunday',
-                                    'monday',
-                                    'tuesday',
-                                    'wednesday',
-                                    'thursday',
-                                    'friday',
-                                    'saturday',
-                                    'observations',
-                                    '',
-                                    '',
-                                    'student_ids'
-                                  ]
+                                  headers: headers
                                 }
     if response.code == 201
       # If import was created successfully create a time_slot importer
@@ -70,6 +53,34 @@ class TimeSlotImporter < ImportModule
 
   def my_name
     "Time Slots"
+  end
+
+  def headers
+    case self.import.source_system
+      when 'kshema'
+        [
+          'external_id',
+          'name',
+          'padma_uid',
+          'start_at',
+          'end_at',
+          'sunday',
+          'monday',
+          'tuesday',
+          'wednesday',
+          'thursday',
+          'friday',
+          'saturday',
+          'observations',
+          '',
+          '',
+          'student_ids'
+        ]
+      when 'sys'
+        %w()
+      when 'other'
+        %w()
+    end
   end
 
 end

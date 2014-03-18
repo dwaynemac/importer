@@ -32,19 +32,7 @@ class TrialLessonImporter < ImportModule
                                 import: {
                                   object: 'TrialLesson',
                                   csv_file: csv,
-                                  headers: [
-                                    '', #external_id
-                                    'contact_external_id',
-                                    'time_slot_external_id',
-                                    'padma_uid',
-                                    'trial_on',
-                                    '', #created_at
-                                    '', #updated_at
-                                    'archived',
-                                    'absence_reason',
-                                    'confirmed',
-                                    'assisted'
-                                  ]
+                                  headers: headers
                                 }
     if response.code == 201
       # If import was created successfully create a trial lesson importer
@@ -60,6 +48,29 @@ class TrialLessonImporter < ImportModule
 
   def my_name
     "Trial Lessons"
+  end
+
+  def headers
+    case self.import.source_system
+      when 'kshema'
+        [
+          '', #external_id
+          'contact_external_id',
+          'time_slot_external_id',
+          'padma_uid',
+          'trial_on',
+          '', #created_at
+          '', #updated_at
+          'archived',
+          'absence_reason',
+          'confirmed',
+          'assisted'
+        ]
+      when 'sys'
+        %w()
+      when 'other'
+        %w()
+    end
   end
 
 end

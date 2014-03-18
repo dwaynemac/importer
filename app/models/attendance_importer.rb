@@ -33,14 +33,7 @@ class AttendanceImporter < ImportModule
                                 import: {
                                   object: 'Attendance',
                                   csv_file: csv,
-                                  headers: [
-                                    '',
-                                    'time_slot_external_id',
-                                    'contact_external_id',
-                                    'attendance_on',
-                                    '',
-                                    ''
-                                  ]
+                                  headers: headers
                                 }
     if response.code == 201
       # If import was created successfully create a attendance importer
@@ -56,6 +49,24 @@ class AttendanceImporter < ImportModule
 
   def my_name
     "Attendances"
+  end
+
+  def headers
+    case self.import.source_system
+      when 'kshema'
+        [
+          '',
+          'time_slot_external_id',
+          'contact_external_id',
+          'attendance_on',
+          '',
+          ''
+        ]
+      when 'sys'
+        %w(sys headers)
+      when 'other'
+        %w()
+    end
   end
 
 end

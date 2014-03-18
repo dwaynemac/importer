@@ -20,6 +20,10 @@ class CrmImporter < ImportModule
   def request_import
   end
 
+  # override in child class
+  def headers
+  end
+
   def api_url
     Crm::HOST + '/api/v0/imports/'
   end

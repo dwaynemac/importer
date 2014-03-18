@@ -14,7 +14,7 @@ class FollowImporter < CrmImporter
                       account_name: import.account.name,
                       object: 'follow',
                       file: csv,
-                      headers: %w(id nombre deleted firma genero apellido school_id cas_login follows)
+                      headers: headers
                     }
   end
 
@@ -24,5 +24,16 @@ class FollowImporter < CrmImporter
 
   def my_name
     'Follows'
+  end
+
+  def headers
+    case self.import.source_system
+      when 'kshema'
+        %w(id nombre deleted firma genero apellido school_id cas_login follows)
+      when 'sys'
+        %w()
+      when 'other'
+        %w()
+    end
   end
 end

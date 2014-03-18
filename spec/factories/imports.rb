@@ -2,6 +2,7 @@
 
 FactoryGirl.define do
   factory :import do
+    source_system 'kshema'
     account
   end
 end

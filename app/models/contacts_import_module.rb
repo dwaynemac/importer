@@ -26,10 +26,7 @@ class ContactsImportModule < ImportModule
                     :account_name => self.import.account.name,
                     :import => {
                       :file => contacts_csv,
-                      :headers => %w(id dni nombres apellidos dire tel cel mail grado_id instructor_id coeficiente_id genero foto
-                        fecha_nacimiento inicio_practicas profesion	notes follow indice_fidelizacion codigo_postal school_id
-                        current_plan_id	created_at updated_at estimated_age	company	job	city locality business_phone
-                        country_id state identity publish_on_gdp last_enrollment in_formation id_scan tags)
+                      :headers => headers
                     }
     if(response.code == 201)
       # If import was created successfully create an import module that will show the status of this import
@@ -78,6 +75,20 @@ class ContactsImportModule < ImportModule
     failed = json['import']['failed_rows'].to_i
     successfull = json['import']['imported_rows'].to_i
     failed + successfull
+  end
+
+  def headers
+    case self.import.source_system
+      when 'kshema'
+        %w(id dni nombres apellidos dire tel cel mail grado_id instructor_id coeficiente_id genero foto
+                          fecha_nacimiento inicio_practicas profesion notes follow indice_fidelizacion codigo_postal school_id
+                          current_plan_id created_at updated_at estimated_age company job city locality business_phone
+                          country_id state identity publish_on_gdp last_enrollment in_formation id_scan tags)
+      when 'sys'
+        %w(header de sys)
+      when 'other'
+        %w()
+    end
   end
 
 end
