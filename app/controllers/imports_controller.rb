@@ -29,7 +29,7 @@ class ImportsController < UserApplicationController
   # POST /imports
   # POST /imports.json
   def create
-    source_system = params[:optionsRadios]
+    source_system = params[:import][:source_system]
     @import = current_user.current_account.imports.build
     @import.source_system = source_system
     respond_to do |format|
