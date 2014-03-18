@@ -29,7 +29,9 @@ class ImportsController < UserApplicationController
   # POST /imports
   # POST /imports.json
   def create
+    source_system = params[:optionsRadios]
     @import = current_user.current_account.imports.build
+    @import.source_system = source_system
     respond_to do |format|
       if @import.save
         format.html { redirect_to edit_import_path(@import), notice: 'Import was successfully created.' }
