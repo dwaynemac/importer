@@ -11,6 +11,7 @@ class KshemaImporter
     proccess_attendance_imports
     process_fnz_imports
     proccess_crm_imports
+    process_planning_imports
   end
 
   private
@@ -40,6 +41,10 @@ class KshemaImporter
     FollowImporter.create(import: @import)
     EnrollmentImporter.create(import: @import)
     DropoutImporter.create(import: @import)
+  end
+
+  def process_planning_imports
+    PlanningImporter.create(import: @import)
   end
 
 end
