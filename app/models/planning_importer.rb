@@ -5,10 +5,10 @@ class PlanningImporter < ImportModule
   end
   
   def delegate
-    reponse = RestClient.post Planning::HOST + '/v0/imports', status_params
+    response = RestClient.post Planning::HOST + '/v0/imports', status_params
     if response.code == 201
       remote_import_id = JSON.parse(response)['id']
-      self.udpate_attibute(status_url: Planning::HOST + '/v0/imports' + remote_import_id)
+      self.update_attribute(:status_url, Planning::HOST + '/v0/imports/' + remote_import_id.to_s)
     end
   end
 
