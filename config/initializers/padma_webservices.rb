@@ -58,10 +58,13 @@ end
 
 module Planning
   API_KEY = ENV['planning_key']
+
   if Rails.env.development?
     HOST = 'localhost:3020'
   elsif Rails.env.test?
     HOST = 'test'
+  elsif Rails.env.production?
+    HOST = 'planning.padm.am'
   end
 end
 
