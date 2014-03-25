@@ -65,6 +65,8 @@ module Planning
     HOST = 'test'
   elsif Rails.env.production?
     HOST = 'planning.padm.am'
+  elsif Rails.env.staging?
+    HOST = 'padma-planning-staging.heroku.com'
   end
 end
 
