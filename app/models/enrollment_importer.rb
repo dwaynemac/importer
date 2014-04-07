@@ -31,7 +31,7 @@ class EnrollmentImporter < CrmImporter
       when 'kshema'
         %w(id fecha instructor_id persona_id contact_id school_id)
       when 'sys'
-        %w()
+        %w(persona_id fecha instructor_id)
       when 'other'
         %w()
     end

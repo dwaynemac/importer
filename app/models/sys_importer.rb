@@ -28,8 +28,8 @@ class SysImporter
     #CommentImporter.create(import: @import)
     CommunicationImporter.create(import: @import)
     #FollowImporter.create(import: @import)
-    #EnrollmentImporter.create(import: @import)
-    #DropoutImporter.create(import: @import)
+    EnrollmentImporter.create(import: @import)
+    DropoutImporter.create(import: @import)
   end
 
 end

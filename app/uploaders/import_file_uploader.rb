@@ -188,10 +188,8 @@ class ImportFileUploader < CarrierWave::Uploader::Base
   def generate_sys_contacts_file
     headers = %w(NumeroCliente DataTelefone DataVisita DataEmail Motivo)
     padma_headers = %w(persona_id type contact_type fecha observations instructor_id coeficiente_id)
-    admin_user = get_director_username
+    admin_user = get_director_username()
 
-    # TODO change values like sexo to match padma values
-    # Make two rows if there is a call and a visit
     CSV.open("tmp/communications.csv","w") do |csv|
       csv << padma_headers
       CSV.foreach(current_path, col_sep: ";", encoding: "UTF-8", headers: :first_row) do |row|
@@ -218,19 +216,30 @@ class ImportFileUploader < CarrierWave::Uploader::Base
   end
 
   def generate_sys_evasions_file
-    headers = %w(NumeroCliente DataSaida Motivo)
-    padma_headers = %w(persona_id fecha notas)
-    # TODO change values like sexo to match padma values
-    # Make two rows if there is a call and a visit
+    headers = %w(NumeroCliente Motivo Grau)
+    padma_headers = %w(fecha persona_id notas grado_id)
+
     CSV.open("tmp/drop_outs.csv","w") do |csv|
-      csv << headers
+      csv << padma_headers
       CSV.foreach(current_path, col_sep: ";", encoding: "UTF-8", headers: :first_row) do |row|
         complete_headers = row.headers()
-        current_row = []
-        headers.each do |h|
-          current_row << get_value_for(h, row, complete_headers)
+        dropOutDate = get_value_for('DataSaida', row, complete_headers)
+        if has_communication_date?(dropOutDate)
+          current_row = []
+          current_row << dropOutDate
+          headers.each do |h|
+            value = get_value_for(h, row, complete_headers)
+            case h
+              when 'NumeroCliente'
+                current_row << set_id_from_account(value, model.account.name)
+              when 'Grau'
+                current_row << get_valid_contacts_level(value)
+              else
+                current_row << value
+            end
+          end
+          csv << current_row
         end
-        csv << current_row
       end
     end
     File.open("tmp/drop_outs.csv","r")
@@ -238,18 +247,28 @@ class ImportFileUploader < CarrierWave::Uploader::Base
 
   def generate_sys_matriculas_file
     headers = %w(NumeroCliente DataMatricula)
+    padma_headers = %w(persona_id fecha instructor_id)
+    admin_user = get_director_username()
 
-    # TODO change values like sexo to match padma values
-    # Make two rows if there is a call and a visit
     CSV.open("tmp/enrollments.csv","w") do |csv|
-      csv << headers
+      csv << padma_headers
       CSV.foreach(current_path, col_sep: ";", encoding: "UTF-8", headers: :first_row) do |row|
         complete_headers = row.headers()
-        current_row = []
-        headers.each do |h|
-          current_row << get_value_for(h, row, complete_headers)
+        enrollmentDate = get_value_for('DataMatricula', row, complete_headers)
+        if has_communication_date?(enrollmentDate)
+          current_row = []
+          headers.each do |h|
+            value = get_value_for(h, row, complete_headers)
+            case h
+            when 'NumeroCliente'
+              current_row << set_id_from_account(value, model.account.name)
+            else
+              current_row << value
+            end
+          end
+          current_row << admin_user
+          csv << current_row
         end
-        csv << current_row
       end
     end
     File.open("tmp/enrollments.csv","r")
@@ -257,8 +276,6 @@ class ImportFileUploader < CarrierWave::Uploader::Base
 
   def generate_sys_horarios_file
     headers = %w(Turma Yoga_Bio)
-    # TODO change values like sexo to match padma values
-    # Make two rows if there is a call and a visit
     CSV.open("tmp/time_slots.csv","w") do |csv|
       csv << headers
       CSV.foreach(current_path, col_sep: ";", encoding: "UTF-8", headers: :first_row) do |row|
