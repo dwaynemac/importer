@@ -187,18 +187,31 @@ class ImportFileUploader < CarrierWave::Uploader::Base
 
   def generate_sys_contacts_file
     headers = %w(NumeroCliente DataTelefone DataVisita DataEmail Motivo)
+    padma_headers = %w(persona_id type contact_type fecha observations instructor_id coeficiente_id)
+    admin_user = get_director_username
 
     # TODO change values like sexo to match padma values
     # Make two rows if there is a call and a visit
     CSV.open("tmp/communications.csv","w") do |csv|
-      csv << headers
+      csv << padma_headers
       CSV.foreach(current_path, col_sep: ";", encoding: "UTF-8", headers: :first_row) do |row|
         complete_headers = row.headers()
-        current_row = []
-        headers.each do |h|
-          current_row << get_value_for(h, row, complete_headers)
+        id = set_id_from_account(get_value_for('NumeroCliente', row, complete_headers), model.account.name)
+        observations = get_value_for('Motivo', row, complete_headers)
+        
+        tel_data = get_value_for('DataTelefone', row, complete_headers)
+        visit_data = get_value_for('DataVisita', row, complete_headers)
+        email_data = get_value_for('DataEmail', row, complete_headers)
+        coefficient = ( is_perfil?(get_value_for('Perfil', row, complete_headers)) ? 'perfil' : 'fp')
+        
+        %w(DataTelefone DataVisita DataEmail).each do |comm_data|
+          communication_date = get_value_for(comm_data, row, complete_headers)
+          if has_communication_date?(communication_date)
+            type = get_communication_type(comm_data)
+            current_row = [id, type[:communication], type[:communication_data], communication_date, observations, admin_user, coefficient]
+            csv << current_row
+          end
         end
-        csv << current_row
       end
     end
     File.open("tmp/communications.csv","r")
@@ -206,7 +219,7 @@ class ImportFileUploader < CarrierWave::Uploader::Base
 
   def generate_sys_evasions_file
     headers = %w(NumeroCliente DataSaida Motivo)
-
+    padma_headers = %w(persona_id fecha notas)
     # TODO change values like sexo to match padma values
     # Make two rows if there is a call and a visit
     CSV.open("tmp/drop_outs.csv","w") do |csv|
@@ -359,5 +372,46 @@ class ImportFileUploader < CarrierWave::Uploader::Base
 
    def clean_value(value)
     return (value == 'NULL' ? '' : value)
+   end
+
+   def get_communication_type(communication_data)
+    response = {communication: nil, communication_data: nil}
+     case communication_data
+       when 'DataTelefone'
+        response[:communication] = 'Televisita'
+        response[:communication_data] = 't'
+       when 'DataVisita'
+        response[:communication] = 'Visita'
+       when 'DataEmail'
+        response[:communication] = 'Televisita'
+     end
+    return response
+   end
+
+   def has_communication_date?(communication_date)
+    response = false
+    begin
+      DateTime.parse(communication_date)
+      response = true
+    rescue ArgumentError
+    end
+    response
+   end
+
+   def get_director_username
+    response = nil
+    # FIXME this should be the code, but now it is not working as expected
+    # current_account = PadmaAccount.find(model.account.name)
+    # users = current_account.users
+    users = PadmaUser.all
+    users.each do |user|
+      roles = user.roles
+      roles.each do |role|
+        if role['name'] == 'director' && role['account_name'] == model.account.name 
+          response = user.username
+        end
+      end
+    end
+    return response
    end
 end

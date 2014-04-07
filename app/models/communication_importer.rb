@@ -32,7 +32,7 @@ class CommunicationImporter < CrmImporter
         %w(id type contact_type persona_id fecha comosupo_id observations instructor_id
                           coeficiente_id school_id created_at updated_at enrolled)
       when 'sys'
-        %w()
+        %w(persona_id type contact_type fecha observations instructor_id coeficiente_id)
       when 'other'
         %w()
     end

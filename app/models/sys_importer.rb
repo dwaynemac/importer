@@ -9,7 +9,7 @@ class SysImporter
   def process
     proccess_contacts_imports
     #proccess_attendance_imports
-    #proccess_crm_imports
+    proccess_crm_imports
   end
 
   private
@@ -25,11 +25,11 @@ class SysImporter
   end
 
   def proccess_crm_imports
-    CommentImporter.create(import: @import)
+    #CommentImporter.create(import: @import)
     CommunicationImporter.create(import: @import)
-    FollowImporter.create(import: @import)
-    EnrollmentImporter.create(import: @import)
-    DropoutImporter.create(import: @import)
+    #FollowImporter.create(import: @import)
+    #EnrollmentImporter.create(import: @import)
+    #DropoutImporter.create(import: @import)
   end
 
 end
