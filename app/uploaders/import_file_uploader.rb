@@ -217,7 +217,8 @@ class ImportFileUploader < CarrierWave::Uploader::Base
 
   def generate_sys_evasions_file
     headers = %w(NumeroCliente Motivo Grau)
-    padma_headers = %w(fecha persona_id notas grado_id)
+    padma_headers = %w(fecha persona_id notas grado_id instructor_id)
+    admin_user = get_director_username()
 
     CSV.open("tmp/drop_outs.csv","w") do |csv|
       csv << padma_headers
@@ -237,6 +238,7 @@ class ImportFileUploader < CarrierWave::Uploader::Base
               else
                 current_row << value
             end
+            current_row << admin_user
           end
           csv << current_row
         end
