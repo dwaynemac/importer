@@ -422,7 +422,7 @@ class ImportFileUploader < CarrierWave::Uploader::Base
     # FIXME this should be the code, but now it is not working as expected
     # current_account = PadmaAccount.find(model.account.name)
     # users = current_account.users
-    users = PadmaUser.all
+    users = PadmaUser.all(per_page: 100)
     users.each do |user|
       roles = user.roles
       roles.each do |role|
