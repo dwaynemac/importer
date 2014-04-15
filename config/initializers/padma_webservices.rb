@@ -56,6 +56,20 @@ module Crm
   end
 end
 
+module Planning
+  API_KEY = ENV['planning_key']
+
+  if Rails.env.development?
+    HOST = 'localhost:3020'
+  elsif Rails.env.test?
+    HOST = 'test'
+  elsif Rails.env.production?
+    HOST = 'planning.padm.am'
+  elsif Rails.env.staging?
+    HOST = 'padma-planning-staging.heroku.com'
+  end
+end
+
 class LogicalModel
   if Rails.env.production? || Rails.env.staging?
     def self.logger
