@@ -4,7 +4,7 @@ class PlanningImporter < ImportModule
     {app_key: Planning::API_KEY, account_name: import.account.name}
   end
   
-  def delegate
+  def delegate_import
     response = RestClient.post Planning::HOST + '/v0/imports', status_params
     if response.code == 201
       remote_import_id = JSON.parse(response)['id']
