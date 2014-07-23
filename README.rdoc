@@ -1,5 +1,3 @@
-[ ![Codeship Status for dwaynemac/importer](https://www.codeship.io/projects/1c703f20-f492-0131-3c84-22104e8563a8/status)](https://www.codeship.io/projects/28123)
-
-== Importer {<img src="https://travis-ci.org/dwaynemac/importer.png" />}[https://travis-ci.org/dwaynemac/importer] {<img src="https://codeclimate.com/github/dwaynemac/importer.png" />}[https://codeclimate.com/github/dwaynemac/importer] {<img src="https://gemnasium.com/dwaynemac/importer.png" alt="Dependecies" />}[https://gemnasium.com/dwaynemac/importer] {<img src="https://coveralls.io/repos/dwaynemac/importer/badge.png" alt="Coverage Status" />}[https://coveralls.io/r/dwaynemac/importer]
+== Importer {<img src="https://www.codeship.io/projects/1c703f20-f492-0131-3c84-22104e8563a8/status" />}[https://www.codeship.io/projects/28123] {<img src="https://codeclimate.com/github/dwaynemac/importer.png" />}[https://codeclimate.com/github/dwaynemac/importer] {<img src="https://gemnasium.com/dwaynemac/importer.png" alt="Dependecies" />}[https://gemnasium.com/dwaynemac/importer] {<img src="https://coveralls.io/repos/dwaynemac/importer/badge.png" alt="Coverage Status" />}[https://coveralls.io/r/dwaynemac/importer]
 
 
