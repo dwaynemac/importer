@@ -28,7 +28,7 @@ group :development do
   gem 'foreman'
   gem 'subcontractor', '~> 0.6.1'
 
-  gem 'byebug', require: 'byebug'
+  gem 'byebug', require: false
 
   gem 'better_errors'
   gem 'binding_of_caller'
