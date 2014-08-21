@@ -5,7 +5,13 @@ class MailingImporter < ImportModule
   end
   
   def delegate_import
-    response = RestClient.post Mailing::HOST + '/api/v0/imports', status_params
+    response = RestClient.post api_url,
+                    app_key: Mailing::API_KEY,
+                    import: {
+                      account_name: import.account.name,
+                      csv_file: csv,
+                      headers: headers
+                    }
     if response.code == 201
       remote_import_id = JSON.parse(response)['id']
       self.update_attribute(:status_url, Mailing::HOST + '/api/v0/imports/' + remote_import_id.to_s)
@@ -22,6 +28,10 @@ class MailingImporter < ImportModule
 
   def map_status (response)
     JSON.parse(response)['import']['status']
+  end
+
+  def headers
+    ["","name", "description", "subject", "content", "", "", "trigger", "", "", "", "header_image_url", "footer_image_url"]
   end
     
 end

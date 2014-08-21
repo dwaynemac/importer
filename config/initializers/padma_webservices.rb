@@ -70,6 +70,20 @@ module Planning
   end
 end
 
+module Mailing
+  API_KEY = ENV['mailing_key']
+  
+  if Rails.env.development?
+    HOST = 'localhost:3025'
+  elsif Rails.env.test?
+    HOST = 'test'
+  elsif Rails.env.production?
+    HOST = 'mailing.padm.am'
+  elsif Rails.env.staging?
+    HOST = 'padma-mailing-staging.heroku.com'
+  end
+end
+
 class LogicalModel
   if Rails.env.production? || Rails.env.staging?
     def self.logger
