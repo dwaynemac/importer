@@ -12,6 +12,7 @@ class KshemaImporter
     process_fnz_imports
     proccess_crm_imports
     process_planning_imports
+    process_mailing_imports
   end
 
   private
@@ -45,6 +46,10 @@ class KshemaImporter
 
   def process_planning_imports
     PlanningImporter.create(import: @import)
+  end
+
+  def process_mailing_imports
+    MailingImporter.create(import: @import)
   end
 
 end
