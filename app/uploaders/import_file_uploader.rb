@@ -101,6 +101,13 @@ class ImportFileUploader < CarrierWave::Uploader::Base
     end
   end
 
+  version :mailing do
+    process :extract_file => :mail_models
+    def full_filename (for_file = model.import_file.file)
+      "mailing.csv"
+    end
+  end
+
   ## SYS versions
 
   def extract_file(filename)
@@ -204,7 +211,7 @@ class ImportFileUploader < CarrierWave::Uploader::Base
         
         %w(DataTelefone DataVisita DataEmail).each do |comm_data|
           communication_date = get_value_for(comm_data, row, complete_headers)
-          if has_communication_date?(communication_date)
+          if !communication_date.blank? && has_communication_date?(communication_date)
             type = get_communication_type(comm_data)
             current_row = [id, type[:communication], type[:communication_data], communication_date, observations, admin_user, coefficient]
             csv << current_row

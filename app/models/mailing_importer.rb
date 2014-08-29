@@ -5,10 +5,18 @@ class MailingImporter < ImportModule
   end
   
   def delegate_import
-    response = RestClient.post api_url,
+    if Rails.env == 'development'
+      # use local file path on development
+      csv = open(self.import.import_file.mailing.path)
+    else
+      # use s3 file on production
+      csv = open_tmp_file(self.import.import_file.mailing.url)
+    end
+
+    response = RestClient.post Mailing::HOST + '/api/v0/imports',
                     app_key: Mailing::API_KEY,
+                    account_name: import.account.name,
                     import: {
-                      account_name: import.account.name,
                       csv_file: csv,
                       headers: headers
                     }
@@ -27,7 +35,7 @@ class MailingImporter < ImportModule
   end
 
   def map_status (response)
-    JSON.parse(response)['import']['status']
+    JSON.parse(response)['status']
   end
 
   def headers
