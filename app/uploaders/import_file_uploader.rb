@@ -177,9 +177,6 @@ class ImportFileUploader < CarrierWave::Uploader::Base
             when 'Grau'
               value = get_valid_contacts_level(value)
             when 'Nome'
-              puts ""
-              puts "setting name"
-              puts "row: #{row.inspect}"
               names = set_name_and_last_name(value)
               current_row << names[:nombres]
               value = names[:apellidos]
@@ -336,8 +333,6 @@ class ImportFileUploader < CarrierWave::Uploader::Base
    end
 
    def set_name_and_last_name(value)
-      puts ""
-      puts "name: #{value}"
       name = value.split.first
       last_name = value.split[1..10].join(" ")
      {:nombres => name, :apellidos => last_name}
