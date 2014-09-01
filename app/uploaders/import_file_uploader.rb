@@ -149,7 +149,7 @@ class ImportFileUploader < CarrierWave::Uploader::Base
     # TODO change values like sexo to match padma values
     CSV.open("tmp/contacts.csv","w") do |csv|
       csv << padma_headers
-      CSV.foreach(current_path, col_sep: ";", encoding: "UTF-8", headers: :first_row) do |row|
+      CSV.foreach(current_path, col_sep: ",", encoding: "UTF-8", headers: :first_row) do |row|
         current_row = []
         complete_headers = row.headers()
         headers.each do |h|
@@ -177,11 +177,16 @@ class ImportFileUploader < CarrierWave::Uploader::Base
             when 'Grau'
               value = get_valid_contacts_level(value)
             when 'Nome'
+              puts ""
+              puts "setting name"
+              puts "row: #{row.inspect}"
               names = set_name_and_last_name(value)
               current_row << names[:nombres]
               value = names[:apellidos]
             when 'sexo'
               value = get_valid_contacts_gender(value)
+            when 'notes'
+              value = get_value_for('Observacoes', row, complete_headers) + '-' + get_value_for('Categoria', row, complete_headers)
           end
 
           current_row << value
@@ -193,13 +198,13 @@ class ImportFileUploader < CarrierWave::Uploader::Base
   end
 
   def generate_sys_contacts_file
-    headers = %w(NumeroCliente DataTelefone DataVisita DataEmail Motivo)
+    headers = %w(NumeroCliente DataTelefone DataVisita DataEmail Motivo AtendidoPor)
     padma_headers = %w(persona_id type contact_type fecha observations instructor_id coeficiente_id)
     admin_user = get_director_username()
 
     CSV.open("tmp/communications.csv","w") do |csv|
       csv << padma_headers
-      CSV.foreach(current_path, col_sep: ";", encoding: "UTF-8", headers: :first_row) do |row|
+      CSV.foreach(current_path, col_sep: ",", encoding: "UTF-8", headers: :first_row) do |row|
         complete_headers = row.headers()
         id = set_id_from_account(get_value_for('NumeroCliente', row, complete_headers), model.account.name)
         observations = get_value_for('Motivo', row, complete_headers)
@@ -208,12 +213,16 @@ class ImportFileUploader < CarrierWave::Uploader::Base
         visit_data = get_value_for('DataVisita', row, complete_headers)
         email_data = get_value_for('DataEmail', row, complete_headers)
         coefficient = ( is_perfil?(get_value_for('Perfil', row, complete_headers)) ? 'perfil' : 'fp')
-        
+        instructor_id = get_value_for('AtendidoPor', row, complete_headers)
+        if instructor_id.blank?
+          instructor_id = admin_user
+        end
+
         %w(DataTelefone DataVisita DataEmail).each do |comm_data|
           communication_date = get_value_for(comm_data, row, complete_headers)
           if !communication_date.blank? && has_communication_date?(communication_date)
             type = get_communication_type(comm_data)
-            current_row = [id, type[:communication], type[:communication_data], communication_date, observations, admin_user, coefficient]
+            current_row = [id, type[:communication], type[:communication_data], communication_date, observations, instructor_id, coefficient]
             csv << current_row
           end
         end
@@ -229,7 +238,7 @@ class ImportFileUploader < CarrierWave::Uploader::Base
 
     CSV.open("tmp/drop_outs.csv","w") do |csv|
       csv << padma_headers
-      CSV.foreach(current_path, col_sep: ";", encoding: "UTF-8", headers: :first_row) do |row|
+      CSV.foreach(current_path, col_sep: ",", encoding: "UTF-8", headers: :first_row) do |row|
         complete_headers = row.headers()
         dropOutDate = get_value_for('DataSaida', row, complete_headers)
         if has_communication_date?(dropOutDate)
@@ -261,7 +270,7 @@ class ImportFileUploader < CarrierWave::Uploader::Base
 
     CSV.open("tmp/enrollments.csv","w") do |csv|
       csv << padma_headers
-      CSV.foreach(current_path, col_sep: ";", encoding: "UTF-8", headers: :first_row) do |row|
+      CSV.foreach(current_path, col_sep: ",", encoding: "UTF-8", headers: :first_row) do |row|
         complete_headers = row.headers()
         enrollmentDate = get_value_for('DataMatricula', row, complete_headers)
         if has_communication_date?(enrollmentDate)
@@ -287,7 +296,7 @@ class ImportFileUploader < CarrierWave::Uploader::Base
     headers = %w(Turma Yoga_Bio)
     CSV.open("tmp/time_slots.csv","w") do |csv|
       csv << headers
-      CSV.foreach(current_path, col_sep: ";", encoding: "UTF-8", headers: :first_row) do |row|
+      CSV.foreach(current_path, col_sep: ",", encoding: "UTF-8", headers: :first_row) do |row|
         complete_headers = row.headers()
         current_row = []
         headers.each do |h|
@@ -327,6 +336,8 @@ class ImportFileUploader < CarrierWave::Uploader::Base
    end
 
    def set_name_and_last_name(value)
+      puts ""
+      puts "name: #{value}"
       name = value.split.first
       last_name = value.split[1..10].join(" ")
      {:nombres => name, :apellidos => last_name}
