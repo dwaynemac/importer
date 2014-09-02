@@ -251,7 +251,11 @@ class ImportFileUploader < CarrierWave::Uploader::Base
               else
                 current_row << value
             end
-            current_row << admin_user
+            instructor_id = get_value_for('AtendidoPor', row, complete_headers)
+            if instructor_id.blank?
+              instructor_id = admin_user
+            end
+            current_row << instructor_id
           end
           csv << current_row
         end
@@ -281,7 +285,11 @@ class ImportFileUploader < CarrierWave::Uploader::Base
               current_row << value
             end
           end
-          current_row << admin_user
+          instructor_id = get_value_for('AtendidoPor', row, complete_headers)
+          if instructor_id.blank?
+            instructor_id = admin_user
+          end
+          current_row << instructor_id
           csv << current_row
         end
       end
