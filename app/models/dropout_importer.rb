@@ -31,7 +31,7 @@ class DropoutImporter < CrmImporter
       when 'kshema'
         %w(id persona_id fecha notas grado_id school_id instructor_id reasons)
       when 'sys'
-        %w(fecha persona_id notas grado_id instructor_id)
+        %w(fecha persona_id grado_id instructor_id)
       end
   end
 end
