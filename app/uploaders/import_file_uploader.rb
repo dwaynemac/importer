@@ -116,7 +116,7 @@ class ImportFileUploader < CarrierWave::Uploader::Base
       when 'kshema'
         file = extract_file_from_kshema_zip filename
       when 'sys'
-        if [:personas, :contacts, :evasions, :matriculas].include? filename
+        if [:personas, :contacts, :evasions, :matriculas, :horarios].include? filename
           file = extract_file_from_sys_csv filename 
         end
     end
@@ -139,8 +139,12 @@ class ImportFileUploader < CarrierWave::Uploader::Base
   end
 
   def generate_sys_personas_file
-    headers = %w(id nombres apellidos instructor_id grado_id coeficiente_id tel tel_com cel dire commercial_address state city country_id mail fecha_nacimiento estimated_age genero civil_state profesion inicio_practicas)
-    padma_headers = %w(id nombres apellidos instructor_id grado_id coeficiente_id tel tel_com cel dire commercial_address state city country_id mail fecha_nacimiento estimated_age genero civil_state profesion inicio_practicas) 
+    headers = %w(NumeroCliente Apelido BairroRes BairroCom Cargo Categoria CEP Cidade 
+      Email Empresa EndResidencial Estado EstadoCivil Grau IndicadoPor Livros_que_leu Nascimento Nome 
+      Profissao Observacoes sexo Telefone2 TelefoneRes TelefoneCom Ja_praticou Ja_similar DataGrad)
+    padma_headers = %w(id apelido state commercial_address cargo coeficiente_id codigo_postal city mail 
+      company dire state civil_state grado_id indicado_por livros_que_leu fecha_nacimiento nombres 
+      apellidos profesion notes genero tel other_tel tel_com ja_practicou ja_similar data_grad) 
     
     # TODO change values like sexo to match padma values
     CSV.open("tmp/contacts.csv","w") do |csv|
@@ -191,7 +195,7 @@ class ImportFileUploader < CarrierWave::Uploader::Base
   end
 
   def generate_sys_contacts_file
-    headers = %w(id DataTelefone DataVisita DataEmail AtendidoPor)
+    headers = %w(NumeroCliente DataTelefone DataVisita DataEmail Motivo AtendidoPor)
     padma_headers = %w(persona_id type contact_type fecha observations instructor_id coeficiente_id)
     admin_user = get_director_username()
 
@@ -199,13 +203,13 @@ class ImportFileUploader < CarrierWave::Uploader::Base
       csv << padma_headers
       CSV.foreach(current_path, col_sep: ",", encoding: "UTF-8", headers: :first_row) do |row|
         complete_headers = row.headers()
-        id = set_id_from_account(get_value_for('id', row, complete_headers), model.account.name)
+        id = set_id_from_account(get_value_for('NumeroCliente', row, complete_headers), model.account.name)
         observations = get_value_for('Motivo', row, complete_headers)
         
         tel_data = get_value_for('DataTelefone', row, complete_headers)
         visit_data = get_value_for('DataVisita', row, complete_headers)
         email_data = get_value_for('DataEmail', row, complete_headers)
-        coefficient = get_value_for('coeficiente_id', row, complete_headers) #( is_perfil?(get_value_for('coeficiente_id', row, complete_headers)) ? 'perfil' : 'fp')
+        coefficient = ( is_perfil?(get_value_for('Perfil', row, complete_headers)) ? 'perfil' : 'fp')
         instructor_id = get_value_for('AtendidoPor', row, complete_headers)
         if instructor_id.blank?
           instructor_id = admin_user
@@ -215,7 +219,7 @@ class ImportFileUploader < CarrierWave::Uploader::Base
           communication_date = get_value_for(comm_data, row, complete_headers)
           if !communication_date.blank? && has_communication_date?(communication_date)
             type = get_communication_type(comm_data)
-            current_row = [id, type[:communication], type[:communication_data], DateTime.strptime(communication_date, '%m/%d/%Y'), observations, instructor_id, coefficient]
+            current_row = [id, type[:communication], type[:communication_data], communication_date, observations, instructor_id, coefficient]
             csv << current_row
           end
         end
@@ -225,8 +229,8 @@ class ImportFileUploader < CarrierWave::Uploader::Base
   end
 
   def generate_sys_evasions_file
-    headers = %w(id grado_id)
-    padma_headers = %w(fecha persona_id grado_id instructor_id)
+    headers = %w(NumeroCliente Motivo Grau)
+    padma_headers = %w(fecha persona_id notas grado_id instructor_id)
     admin_user = get_director_username()
 
     CSV.open("tmp/drop_outs.csv","w") do |csv|
@@ -236,13 +240,13 @@ class ImportFileUploader < CarrierWave::Uploader::Base
         dropOutDate = get_value_for('DataSaida', row, complete_headers)
         if has_communication_date?(dropOutDate)
           current_row = []
-          current_row << DateTime.strptime(dropOutDate, '%m/%d/%Y')
+          current_row << dropOutDate
           headers.each do |h|
             value = get_value_for(h, row, complete_headers)
             case h
               when 'NumeroCliente'
                 current_row << set_id_from_account(value, model.account.name)
-              when 'grado_id'
+              when 'Grau'
                 current_row << get_valid_contacts_level(value)
               else
                 current_row << value
@@ -261,7 +265,7 @@ class ImportFileUploader < CarrierWave::Uploader::Base
   end
 
   def generate_sys_matriculas_file
-    headers = %w(id DataMatricula)
+    headers = %w(NumeroCliente DataMatricula)
     padma_headers = %w(persona_id fecha instructor_id)
     admin_user = get_director_username()
 
@@ -277,8 +281,6 @@ class ImportFileUploader < CarrierWave::Uploader::Base
             case h
             when 'NumeroCliente'
               current_row << set_id_from_account(value, model.account.name)
-            when 'DataMatricula'
-              current_row << DateTime.strptime(value, '%m/%d/%Y')
             else
               current_row << value
             end
@@ -314,8 +316,7 @@ class ImportFileUploader < CarrierWave::Uploader::Base
   protected
 
    def set_id_from_account(id, account_name)
-    #return account_name+id
-    return id
+    return account_name+id
    end
 
    def get_value_for(field, row, complete_headers)
@@ -428,11 +429,9 @@ class ImportFileUploader < CarrierWave::Uploader::Base
    end
 
    def has_communication_date?(communication_date)
-    return false if communication_date.blank?
     response = false
     begin
-      #DateTime.parse(communication_date)
-      DateTime.strptime("7/28/2013", '%m/%d/%Y')
+      DateTime.parse(communication_date)
       response = true
     rescue ArgumentError
     end
