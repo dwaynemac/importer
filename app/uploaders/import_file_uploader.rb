@@ -116,7 +116,7 @@ class ImportFileUploader < CarrierWave::Uploader::Base
       when 'kshema'
         file = extract_file_from_kshema_zip filename
       when 'sys'
-        if [:personas, :contacts, :evasions, :matriculas, :horarios].include? filename
+        if filename == :personas #[:personas, :contacts, :evasions, :matriculas, :horarios].include? filename
           file = extract_file_from_sys_csv filename 
         end
     end
@@ -139,12 +139,14 @@ class ImportFileUploader < CarrierWave::Uploader::Base
   end
 
   def generate_sys_personas_file
-    headers = %w(NumeroCliente Apelido BairroRes BairroCom Cargo Categoria CEP Cidade 
-      Email Empresa EndResidencial Estado EstadoCivil Grau IndicadoPor Livros_que_leu Nascimento Nome 
-      Profissao Observacoes sexo Telefone2 TelefoneRes TelefoneCom Ja_praticou Ja_similar DataGrad)
-    padma_headers = %w(id apelido state commercial_address cargo coeficiente_id codigo_postal city mail 
-      company dire state civil_state grado_id indicado_por livros_que_leu fecha_nacimiento nombres 
-      apellidos profesion notes genero tel other_tel tel_com ja_practicou ja_similar data_grad) 
+    #headers = %w(NumeroCliente Apelido BairroRes BairroCom Cargo Categoria CEP Cidade 
+    #  Email Empresa EndResidencial Estado EstadoCivil Grau IndicadoPor Livros_que_leu Nascimento Nome 
+    #  Profissao Observacoes sexo Telefone2 TelefoneRes TelefoneCom Ja_praticou Ja_similar DataGrad)
+    #padma_headers = %w(id apelido state commercial_address cargo coeficiente_id codigo_postal city mail 
+    #  company dire state civil_state grado_id indicado_por livros_que_leu fecha_nacimiento nombres 
+    #  apellidos profesion notes genero tel other_tel tel_com ja_practicou ja_similar data_grad) 
+    headers = %w(id Nome Sobrenome Email DataTelefone)
+    padma_headers = %w(id nombres apellidos mail tel)
     
     # TODO change values like sexo to match padma values
     CSV.open("tmp/contacts.csv","w") do |csv|
@@ -155,7 +157,7 @@ class ImportFileUploader < CarrierWave::Uploader::Base
         headers.each do |h|
           value = get_value_for(h, row, complete_headers)
           case h
-            when 'NumeroCliente'
+            when 'id'
               value = set_id_from_account(value, model.account.name)
             when 'EndResidencial'
               value = generate_address(
@@ -176,10 +178,10 @@ class ImportFileUploader < CarrierWave::Uploader::Base
               value = get_valid_contacts_coefficient(value, get_value_for('Perfil',row, complete_headers))
             when 'Grau'
               value = get_valid_contacts_level(value)
-            when 'Nome'
-              names = set_name_and_last_name(value)
-              current_row << names[:nombres]
-              value = names[:apellidos]
+            #when 'Nome'
+              #names = set_name_and_last_name(value)
+              #current_row << names[:nombres]
+              #value = names[:apellidos]
             when 'sexo'
               value = get_valid_contacts_gender(value)
             when 'notes'
