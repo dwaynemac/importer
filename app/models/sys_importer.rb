@@ -9,7 +9,7 @@ class SysImporter
   def process
     proccess_contacts_imports
     #proccess_attendance_imports
-    #proccess_crm_imports
+    proccess_crm_imports
   end
 
   private

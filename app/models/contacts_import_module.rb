@@ -85,7 +85,9 @@ class ContactsImportModule < ImportModule
                           current_plan_id created_at updated_at estimated_age company job city locality business_phone
                           country_id state identity publish_on_gdp last_enrollment in_formation id_scan tags)
       when 'sys'
-        %w(id nombres apellidos mail tel)
+        %w(id apelido state commercial_address cargo coeficiente_id codigo_postal city mail company dire state civil_state 
+        grado_id indicado_por livros_que_leu fecha_nacimiento nombres apellidos profesion notes genero tel other_tel tel_com 
+        ja_practicou ja_similar data_grad)
       when 'other'
         %w()
     end
