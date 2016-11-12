@@ -140,7 +140,7 @@ class ImportFileUploader < CarrierWave::Uploader::Base
 
   def generate_sys_personas_file
     headers = %w(NumeroCliente Apelido BairroRes BairroCom Cargo Categoria CEP Cidade 
-      Email Empresa EndResidencial Estado EstadoCivil Grau IndicadoPor Livros_que_leu Nascimento Nome 
+      Email Empresa EndResidencial Estado EstadoCivil Grau IndicadoPor Livros_que_leu Nascimento NomeCompleto 
       Profissao Observacoes sexo Telefone2 TelefoneRes TelefoneCom Ja_praticou Ja_similar DataGrad)
     padma_headers = %w(id apelido state commercial_address cargo coeficiente_id codigo_postal city mail 
       company dire state civil_state grado_id indicado_por livros_que_leu fecha_nacimiento nombres 
@@ -374,6 +374,8 @@ class ImportFileUploader < CarrierWave::Uploader::Base
         return 'sádhaka'
       when 'yôgin'
         return 'yôgin'
+      when 'mestre'
+        return 'maestro'
      end
    end
 
