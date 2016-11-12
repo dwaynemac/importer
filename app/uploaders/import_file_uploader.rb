@@ -178,7 +178,7 @@ class ImportFileUploader < CarrierWave::Uploader::Base
               value = get_valid_contacts_coefficient(value, get_value_for('Perfil',row, complete_headers))
             when 'Grau'
               value = get_valid_contacts_level(value)
-            when 'Nome'
+            when 'NomeCompleto'
               names = set_name_and_last_name(value)
               current_row << names[:nombres]
               value = names[:apellidos]
